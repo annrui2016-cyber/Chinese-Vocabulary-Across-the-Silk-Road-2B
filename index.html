@@ -3,86 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Silk Road 2B Pro - Full Edition</title>
+    <title>New HSK 1 - Smart Dictionary</title>
     <style>
-        :root { --green: #00843D; --red: #EF3340; --bg: #f4f7f6; }
+        :root { --green: #00843D; --red: #EF3340; --blue: #005EB8; --bg: #f4f7f6; }
         body { font-family: system-ui, sans-serif; background: var(--bg); margin: 0; padding-bottom: 50px; }
         header { background: var(--green); color: white; padding: 20px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .search-area { padding: 15px; background: white; position: sticky; top: 82px; z-index: 99; border-bottom: 1px solid #ddd; text-align: center; }
-        #q { width: 90%; padding: 12px; border-radius: 25px; border: 2px solid #eee; font-size: 16px; outline: none; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); }
+        
+        /* 分类导航栏样式 */
+        .category-nav { display: flex; overflow-x: auto; padding: 10px; background: white; gap: 10px; border-bottom: 1px solid #ddd; position: sticky; top: 82px; z-index: 99; }
+        .nav-btn { white-space: nowrap; padding: 8px 15px; border-radius: 20px; border: 1px solid var(--green); background: white; color: var(--green); font-weight: bold; cursor: pointer; }
+        .nav-btn.active { background: var(--green); color: white; }
+
+        .search-area { padding: 15px; background: white; position: sticky; top: 135px; z-index: 98; border-bottom: 1px solid #ddd; text-align: center; }
+        #q { width: 90%; padding: 12px; border-radius: 25px; border: 2px solid #eee; font-size: 16px; outline: none; }
+        
         .container { display: flex; flex-wrap: wrap; justify-content: center; padding: 15px; gap: 20px; }
         .card { background: white; width: 330px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-left: 6px solid var(--red); overflow: hidden; }
         .card-top { display: flex; padding: 15px; align-items: center; }
         img { width: 90px; height: 90px; border-radius: 10px; object-fit: cover; margin-right: 15px; background: #eee; }
+        
         .info h2 { margin: 0; font-size: 26px; color: #333; }
-        .info .py-main { color: var(--red); font-size: 15px; font-weight: 500; margin: 2px 0; }
-        .info .ar { color: var(--green); font-weight: bold; font-size: 20px; direction: rtl; }
-        .ex-box { background: #fafafa; margin: 0 15px 10px; padding: 12px; border-radius: 10px; line-height: 2.6; border: 1px solid #eee; }
-        ruby { font-size: 22px; color: #333; }
-        rt { font-size: 12px; color: var(--red); font-weight: normal; }
-        .ar-ex { display: block; font-size: 14px; color: #777; direction: rtl; text-align: right; margin-top: 8px; border-top: 1px dashed #ddd; padding-top: 5px; }
+        .info .py { color: var(--red); font-size: 15px; font-weight: 500; }
+        .info .en { color: var(--blue); font-size: 14px; font-weight: bold; }
+        .info .ar { color: var(--green); font-size: 18px; direction: rtl; margin-top: 3px; }
+        
+        .ex-box { background: #fafafa; margin: 0 15px 10px; padding: 12px; border-radius: 10px; line-height: 2.2; border: 1px solid #eee; }
+        ruby { font-size: 21px; color: #333; }
+        rt { font-size: 11px; color: var(--red); }
+        .ex-trans { display: block; font-size: 13px; color: #666; margin-top: 5px; }
+        .ex-ar { direction: rtl; text-align: right; color: var(--green); border-top: 1px dashed #eee; padding-top: 5px; margin-top: 5px; }
+        
         .btn-group { display: flex; gap: 10px; padding: 0 15px 15px; }
-        button { flex: 1; padding: 10px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 14px; transition: 0.2s; }
-        .btn-word { background: var(--green); color: white; }
-        .btn-ex { background: #e8f5e9; color: var(--green); border: 1px solid var(--green); }
-        button:active { transform: scale(0.95); opacity: 0.8; }
+        button.play-btn { flex: 1; padding: 10px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 13px; }
+        .btn-w { background: var(--green); color: white; }
+        .btn-s { background: #e8f5e9; color: var(--green); border: 1px solid var(--green); }
     </style>
 </head>
 <body>
 
 <header>
-    <h1 style="margin:0; font-size:22px;">Silk Road 2B Pro</h1>
-    <p style="margin:5px 0 0; font-size:12px; opacity:0.8;">标准声调 + 慢速朗读版</p>
+    <h1 style="margin:0; font-size:20px;">New HSK 1 Dictionary</h1>
+    <p style="margin:5px 0 0; font-size:12px; opacity:0.8;">中-英-阿 三语慢速朗读版</p>
 </header>
 
+<div class="category-nav" id="nav">
+    <button class="nav-btn active" onclick="filterCat('ALL', this)">全部 (All)</button>
+    <button class="nav-btn" onclick="filterCat('PEOPLE', this)">人称 (People)</button>
+    <button class="nav-btn" onclick="filterCat('NUM', this)">数字 (Numbers)</button>
+    <button class="nav-btn" onclick="filterCat('FOOD', this)">饮食 (Food)</button>
+    <button class="nav-btn" onclick="filterCat('TIME', this)">时间 (Time)</button>
+    <button class="nav-btn" onclick="filterCat('ACT', this)">动作 (Actions)</button>
+</div>
+
 <div class="search-area">
-    <input type="text" id="q" placeholder="搜索中文、拼音、阿语..." oninput="find()">
+    <input type="text" id="q" placeholder="搜索中文、拼音、英、阿..." oninput="find()">
 </div>
 
 <div class="container" id="list"></div>
 
 <script>
     const words = [
-        // 已修正可乐图片
-        {c:"咖啡", p:"kāfēi", a:"قهوة", i:"https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?w=200", s:"<ruby>你<rt>nǐ</rt></ruby><ruby>喝<rt>hē</rt></ruby><ruby>茶<rt>chá</rt></ruby><ruby>还<rt>hái</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>喝<rt>hē</rt></ruby><ruby>咖<rt>kā</rt></ruby><ruby>啡<rt>fēi</rt></ruby>？", plain:"你喝茶还是喝咖啡？", sa:"هل تشرب الشاي أم القهوة؟"},
-        {c:"可乐", p:"kělè", a:"كولا", i:"https://images.pexels.com/photos/4113670/pexels-photo-4113670.jpeg", s:"<ruby>我<rt>wǒ</rt></ruby><ruby>想<rt>xiǎng</rt></ruby><ruby>喝<rt>hē</rt></ruby><ruby>可<rt>kě</rt></ruby><ruby>乐<rt>lè</rt></ruby>。", plain:"我想喝可乐。", sa:"أريد أن أشرب الكولا."},
-        
-        // 补全更多 2B 重点词汇
-        {c:"面条", p:"miàntiáo", a:"نودلز", i:"https://images.pexels.com/photos/2092906/pexels-photo-2092906.jpeg?w=200", s:"<ruby>我<rt>wǒ</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huan</rt></ruby><ruby>吃<rt>chī</rt></ruby><ruby>面<rt>miàn</rt></ruby><ruby>条<rt>tiáo</rt></ruby>。", plain:"我喜欢吃面条。", sa:"أنا أحب أكل النودلز."},
-        {c:"早饭", p:"zǎofàn", a:"فطور", i:"https://images.pexels.com/photos/103124/pexels-photo-103124.jpeg?w=200", s:"<ruby>你<rt>nǐ</rt></ruby><ruby>几<rt>jǐ</rt></ruby><ruby>点<rt>diǎn</rt></ruby><ruby>吃<rt>chī</rt></ruby><ruby>早<rt>zǎo</rt></ruby><ruby>饭<rt>fàn</rt></ruby>？", plain:"你几点吃早饭？", sa:"في أي ساعة تتناول الفطور؟"},
-        {c:"羊肉", p:"yángròu", a:"لحم ضأن", i:"https://images.pexels.com/photos/618491/pexels-photo-618491.jpeg?w=200", s:"<ruby>我不<rt>wǒbù</rt></ruby><ruby>爱<rt>ài</rt></ruby><ruby>吃<rt>chī</rt></ruby><ruby>羊<rt>yáng</rt></ruby><ruby>肉<rt>ròu</rt></ruby>。", plain:"我不爱吃羊肉。", sa:"أنا لا أحب أكل لحم الضأن."},
-        {c:"医生", p:"yīshēng", a:"طبيب", i:"https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?w=200", s:"<ruby>我<rt>wǒ</rt></ruby><ruby>想<rt>xiǎng</rt></ruby><ruby>当<rt>dāng</rt></ruby><ruby>医<rt>yī</rt></ruby><ruby>生<rt>shēng</rt></ruby>。", plain:"我想当医生。", sa:"أريد أن أصبح طبيباً."},
-        {c:"医院", p:"yīyuàn", a:"مستشفى", i:"https://images.pexels.com/photos/236380/pexels-photo-236380.jpeg?w=200", s:"<ruby>他在<rt>tāzài</rt></ruby><ruby>医<rt>yī</rt></ruby><ruby>院<rt>yuàn</rt></ruby><ruby>工作<rt>gōngzuò</rt></ruby>。", plain:"他在医院工作。", sa:"هو يعمل في المستشفى."},
-        {c:"服务员", p:"fúwùyuán", a:"نادل", i:"https://images.pexels.com/photos/1307698/pexels-photo-1307698.jpeg?w=200", s:"<ruby>服<rt>fú</rt></ruby><ruby>务<rt>wù</rt></ruby><ruby>员<rt>yuán</rt></ruby>，<ruby>点菜<rt>diǎncài</rt></ruby>！", plain:"服务员，点菜！", sa:"أيها النادل، اطلب الطعام!"},
-        {c:"多少钱", p:"duōshǎo qián", a:"بكم؟", i:"https://images.pexels.com/photos/259200/pexels-photo-259200.jpeg?w=200", s:"<ruby>这个<rt>zhège</rt></ruby><ruby>多少<rt>duōshǎo</rt></ruby><ruby>钱<rt>qián</rt></ruby>？", plain:"这个多少钱？", sa:"بكم هذا؟"},
-        {c:"手机", p:"shǒujī", a:"هاتف محمول", i:"https://images.pexels.com/photos/607812/pexels-photo-607812.jpeg?w=200", s:"<ruby>我<rt>wǒ</rt></ruby><ruby>想买<rt>xiǎngmǎi</rt></ruby><ruby>新<rt>xīn</rt></ruby><ruby>手机<rt>shǒujī</rt></ruby>。", plain:"我想买新手机。", sa:"أريد شراء هاتف جديد."},
-        {c:"贵", p:"guì", a:"غالٍ", i:"https://images.pexels.com/photos/3760757/pexels-photo-3760757.jpeg?w=200", s:"<ruby>太<rt>tài</rt></ruby><ruby>贵<rt>guì</rt></ruby><ruby>了<rt>le</rt></ruby>！", plain:"太贵了！", sa:"غالي جداً!"},
-        {c:"天气", p:"tiānqì", a:"الطقس", i:"https://images.pexels.com/photos/209831/pexels-photo-209831.jpeg?w=200", s:"<ruby>今天<rt>jīntiān</rt></ruby><ruby>天气<rt>tiānqì</rt></ruby><ruby>怎么样<rt>zěnmeyàng</rt></ruby>？", plain:"今天天气怎么样？", sa:"كيف حال الطقس اليوم؟"},
-        {c:"冷", p:"lěng", a:"بارد", i:"https://images.pexels.com/photos/731188/pexels-photo-731188.jpeg?w=200", s:"<ruby>今天<rt>jīntiān</rt></ruby><ruby>不<rt>bù</rt></ruby><ruby>太<rt>tài</rt></ruby><ruby>冷<rt>lěng</rt></ruby>。", plain:"今天不太冷。", sa:"اليوم ليس بارداً جداً."}
+        {cat:"PEOPLE", c:"我", p:"wǒ", e:"I / Me", a:"أنا", i:"https://images.pexels.com/photos/1010519/pexels-photo-1010519.jpeg?w=200", s:"<ruby>我<rt>wǒ</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>老师<rt>lǎoshī</rt></ruby>。", plain:"我是老师。", et:"I am a teacher.", at:"أنا معلم."},
+        {cat:"PEOPLE", c:"你", p:"nǐ", e:"You", a:"أنت", i:"https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?w=200", s:"<ruby>你<rt>nǐ</rt></ruby><ruby>好<rt>hǎo</rt></ruby>！", plain:"你好！", et:"Hello!", at:"مرحباً!"},
+        {cat:"FOOD", c:"水", p:"shuǐ", e:"Water", a:"ماء", i:"https://images.pexels.com/photos/407102/pexels-photo-407102.jpeg?w=200", s:"<ruby>请<rt>qǐng</rt></ruby><ruby>喝<rt>hē</rt></ruby><ruby>水<rt>shuǐ</rt></ruby>。", plain:"请喝水。", et:"Please drink water.", at:"تفضل اشرب الماء."},
+        {cat:"NUM", c:"一", p:"yī", e:"One", a:"واحد", i:"https://via.placeholder.com/90?text=1", s:"<ruby>一<rt>yī</rt></ruby><ruby>个<rt>gè</rt></ruby><ruby>人<rt>rén</rt></ruby>。", plain:"一个人。", et:"One person.", at:"شخص واحد."},
+        {cat:"TIME", c:"现在", p:"xiànzài", e:"Now", a:"الآن", i:"https://images.pexels.com/photos/1198264/pexels-photo-1198264.jpeg?w=200", s:"<ruby>现<rt>xiàn</rt></ruby><ruby>在<rt>zài</rt></ruby><ruby>几<rt>jǐ</rt></ruby><ruby>点<rt>diǎn</rt></ruby>？", plain:"现在几点？", et:"What time is it now?", at:"كم الساعة الآن؟"},
+        {cat:"ACT", c:"看", p:"kàn", e:"Look/Watch", a:"يشاهد", i:"https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?w=200", s:"<ruby>看<rt>kàn</rt></ruby><ruby>电<rt>diàn</rt></ruby><ruby>视<rt>shì</rt></ruby>。", plain:"看电视。", et:"Watch TV.", at:"مشاهدة التلفاز."}
+        // 后续可以在这里继续添加 500 个词...
     ];
+
+    let currentCat = "ALL";
 
     function render(data) {
         const box = document.getElementById('list');
         let html = "";
-        for (let i = 0; i < data.length; i++) {
-            const w = data[i];
-            html += '<div class="card">' +
-                '<div class="card-top">' +
-                    '<img src="' + w.i + '" onerror="this.src=\'https://via.placeholder.com/90\'">' +
-                    '<div class="info">' +
-                        '<h2>' + w.c + '</h2>' +
-                        '<div class="py-main">' + w.p + '</div>' +
-                        '<div class="ar">' + w.a + '</div>' +
-                    '</div>' +
-                '</div>' +
-                '<div class="ex-box">' + w.s + '<span class="ar-ex">' + w.sa + '</span></div>' +
-                '<div class="btn-group">' +
-                    '<button class="btn-word" onclick="speak(\'' + w.c + '\')">🔊 单词</button>' +
-                    '<button class="btn-ex" onclick="speak(\'' + w.plain + '\')">📖 读例句</button>' +
-                '</div>' +
-            '</div>';
-        }
-        box.innerHTML = html || '<p style="padding:20px; color:#999;">未找到匹配内容...</p>';
+        data.forEach(w => {
+            html += `<div class="card">
+                <div class="card-top">
+                    <img src="${w.i}" onerror="this.src='https://via.placeholder.com/90'">
+                    <div class="info">
+                        <h2>${w.c}</h2>
+                        <div class="py">${w.p}</div>
+                        <div class="en">${w.e}</div>
+                        <div class="ar">${w.a}</div>
+                    </div>
+                </div>
+                <div class="ex-box">
+                    ${w.s}
+                    <span class="ex-trans">🇺🇸 ${w.et}</span>
+                    <span class="ex-trans ex-ar">🇸🇦 ${w.at}</span>
+                </div>
+                <div class="btn-group">
+                    <button class="play-btn btn-w" onclick="speak('${w.c}')">🔊 Word</button>
+                    <button class="play-btn btn-s" onclick="speak('${w.plain}')">📖 Example</button>
+                </div>
+            </div>`;
+        });
+        box.innerHTML = html || '<p style="padding:20px; color:#999;">No results found...</p>';
     }
 
     function speak(text) {
@@ -93,16 +110,25 @@
         window.speechSynthesis.speak(msg);
     }
 
-    function find() {
-        const v = document.getElementById('q').value.toLowerCase().trim();
-        const f = words.filter(w => {
-            const pyNoTones = w.p.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s/g, "");
-            return w.c.includes(v) || pyNoTones.includes(v.replace(/\s/g, '')) || w.a.includes(v);
-        });
-        render(f);
+    function filterCat(cat, btn) {
+        currentCat = cat;
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        find();
     }
 
-    window.onload = function() { render(words); };
+    function find() {
+        const v = document.getElementById('q').value.toLowerCase().trim();
+        const filtered = words.filter(w => {
+            const matchCat = (currentCat === "ALL" || w.cat === currentCat);
+            const pyNoTones = w.p.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s/g, "");
+            const matchQuery = w.c.includes(v) || pyNoTones.includes(v.replace(/\s/g, '')) || w.e.toLowerCase().includes(v) || w.a.includes(v);
+            return matchCat && matchQuery;
+        });
+        render(filtered);
+    }
+
+    window.onload = () => render(words);
 </script>
 
 </body>
