@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Across the Silk Road - Level 6</title>
+    <style>
+        :root { --primary: #c0392b; --accent: #e74c3c; --bg: #fdfdfd; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); margin: 0; padding-bottom: 40px; }
+        header { background: linear-gradient(135deg, var(--primary), #2c3e50); color: white; padding: 25px 20px; text-align: center; }
+        .container { padding: 15px; max-width: 600px; margin: 0 auto; }
+        .card { background: white; border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #eee; }
+        .word-section { display: flex; align-items: flex-start; justify-content: space-between; cursor: pointer; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; }
+        .word-zh { font-size: 32px; font-weight: bold; color: #333; margin: 0; }
+        .word-py { font-size: 16px; color: var(--accent); margin-top: 5px; }
+        .word-ar { font-size: 20px; color: #27ae60; direction: rtl; margin-top: 5px; font-weight: bold; }
+        .sentence-section { background: #fdf2f2; padding: 15px; border-radius: 12px; margin-top: 15px; cursor: pointer; border: 1px dashed #c0392b; }
+        .s-py { display: block; font-size: 14px; color: #666; margin-bottom: 4px; }
+        .s-zh { font-size: 18px; color: #333; line-height: 1.4; display: block; }
+        .speaker { font-size: 24px; color: var(--primary); opacity: 0.7; }
+    </style>
+</head>
+<body>
+<header><h1>Level 6</h1><div style="font-size:14px; opacity:0.8;">Across the Silk Road • Term 2</div></header>
+<div class="container" id="list"></div>
+<script>
+    const data = [
+        {c:"身体", p:"shēntǐ", a:"جسم", s:"你要注意身体。", sp:"Nǐ yào zhùyì shēntǐ."},
+        {c:"头", p:"tóu", a:"رأس", s:"我的头很疼。", sp:"Wǒ de tóu hěn téng."},
+        {c:"眼睛", p:"yǎnjing", a:"عين", s:"她的眼睛很漂亮。", sp:"Tā de yǎnjing hěn piàoliang."},
+        {c:"耳朵", p:"ěrduo", a:"أذن", s:"兔子有长耳朵。", sp:"Tùzi yǒu cháng ěrduo."},
+        {c:"鼻子", p:"bízi", a:"أنف", s:"大象有长鼻子。", sp:"Dàxiàng yǒu cháng bízi."},
+        {c:"嘴巴", p:"zuǐba", a:"فم", s:"张开嘴巴。", sp:"Zhāngkāi zuǐba."},
+        {c:"手", p:"shǒu", a:"يد", s:"洗洗手。", sp:"Xǐxishǒu."},
+        {c:"脚", p:"jiǎo", a:"قدم", s:"我的脚疼。", sp:"Wǒ de jiǎo téng."},
+        {c:"长", p:"cháng", a:"طويل", s:"她的头发很长。", sp:"Tā de tóufa hěn cháng."},
+        {c:"疼", p:"téng", a:"ألم / يؤلم", s:"我牙疼。", sp:"Wǒ yá téng."},
+        {c:"感冒", p:"gǎnmào", a:"زكام / نزل برد", s:"我感冒了。", sp:"Wǒ gǎnmào le."},
+        {c:"药", p:"yào", a:"دواء", s:"记得吃药。", sp:"Jìde chī yào."},
+        {c:"舒服", p:"shūfu", a:"مرتاح", s:"我身体不舒服。", sp:"Wǒ shēntǐ bù shūfu."}
+    ];
+    const list = document.getElementById('list');
+    data.forEach(item => {
+        list.innerHTML += `<div class="card">
+            <div class="word-section" onclick="speak('${item.c}', 0.8)">
+                <div class="word-box"><p class="word-zh">${item.c}</p><p class="word-py">${item.p}</p><p class="word-ar">${item.a}</p></div>
+                <div class="speaker">🔊</div>
+            </div>
+            <div class="sentence-section" onclick="speak('${item.s}', 0.5)">
+                <span class="s-py">${item.sp}</span><span class="s-zh">${item.s}</span>
+            </div>
+        </div>`;
+    });
+    function speak(text, rate) {
+        window.speechSynthesis.cancel();
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN'; msg.rate = rate;
+        window.speechSynthesis.speak(msg);
+    }
+</script>
+</body>
+</html>
