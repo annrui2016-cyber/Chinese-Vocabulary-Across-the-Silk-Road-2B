@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Across the Silk Road - Level 2</title>
+    <style>
+        :root { --primary: #2c3e50; --accent: #e67e22; --bg: #fdfdfd; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); margin: 0; padding-bottom: 40px; }
+        header { background: linear-gradient(135deg, var(--primary), #34495e); color: white; padding: 25px 20px; text-align: center; }
+        .container { padding: 15px; max-width: 600px; margin: 0 auto; }
+        .card { background: white; border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #eee; }
+        .word-section { display: flex; align-items: flex-start; justify-content: space-between; cursor: pointer; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; }
+        .word-box { flex: 1; }
+        .word-zh { font-size: 32px; font-weight: bold; color: #333; margin: 0; }
+        .word-py { font-size: 16px; color: var(--accent); margin-top: 5px; }
+        .word-ar { font-size: 20px; color: #27ae60; direction: rtl; margin-top: 5px; font-weight: bold; }
+        .sentence-section { background: #fffcf5; padding: 15px; border-radius: 12px; margin-top: 15px; cursor: pointer; border: 1px dashed #f39c12; }
+        .s-label { font-size: 11px; color: #999; font-weight: bold; margin-bottom: 5px; display: block; }
+        .s-py { display: block; font-size: 14px; color: #666; margin-bottom: 4px; }
+        .s-zh { font-size: 18px; color: #333; line-height: 1.4; display: block; }
+        .speaker { font-size: 24px; color: var(--accent); opacity: 0.7; }
+    </style>
+</head>
+<body>
+<header>
+    <h1 style="margin:0;">Level 2</h1>
+    <div style="font-size:14px; opacity:0.8; margin-top:10px;">Across the Silk Road • Term 2</div>
+</header>
+<div class="container" id="list"></div>
+<script>
+    const level2Data = [
+        {c:"祝", p:"zhù", a:"يتمنى", s:"祝你生日快乐！", sp:"Zhù nǐ shēngrì kuàilè!"},
+        {c:"生日", p:"shēngrì", a:"عيد ميلاد", s:"今天是我的生日。", sp:"Jīntiān shì wǒ de shēngrì."},
+        {c:"快乐", p:"kuàilè", a:"سعيد", s:"祝你生日快乐！", sp:"Zhù nǐ shēngrì kuàilè!"},
+        {c:"礼物", p:"lǐwù", a:"هدية", s:"这是你的生日礼物。", sp:"Zhè shì nǐ de shēngrì lǐwù."},
+        {c:"几", p:"jǐ", a:"كم / أي", s:"你的生日是几月几号？", sp:"Nǐ de shēngrì shì jǐ yuè jǐ hào?"},
+        {c:"月", p:"yuè", a:"شهر", s:"我的生日是三月十号。", sp:"Wǒ de shēngrì shì sān yuè shí hào."},
+        {c:"学生", p:"xuésheng", a:"طالب", s:"我是学生。", sp:"Wǒ shì xuésheng."},
+        {c:"医生", p:"yīshēng", a:"طبيب", s:"我爸爸是医生。", sp:"Wǒ bàba shì yīshēng."},
+        {c:"警察", p:"jǐngchá", a:"شرطة", s:"我爸爸是警察。", sp:"Wǒ bàba shì jǐngchá."},
+        {c:"消防员", p:"xiāofángyuán", a:"إطفائي", s:"我爸爸是消防员。", sp:"Wǒ bàba shì xiāofángyuán."},
+        {c:"宇航员", p:"yǔhángyuán", a:"رائد فضاء", s:"我想当宇航员。", sp:"Wǒ xiǎng dāng yǔhángyuán."},
+        {c:"做", p:"zuò", a:"يفعل / يعمل", s:"你爸爸做什么工作？", sp:"Nǐ bàba zuò shénme gōngzuò?"},
+        {c:"工作", p:"gōngzuò", a:"عمل / وظيفة", s:"你妈妈做什么工作？", sp:"Nǐ māma zuò shénme gōngzuò?"},
+        {c:"科学家", p:"kēxuéjiā", a:"عالم", s:"我妈妈是科学家。", sp:"Wǒ māma shì kēxuéjiā."},
+        {c:"公务员", p:"gōngwùyuán", a:"موظف مدني", s:"我妈妈是公务员。", sp:"Wǒ māma shì gōngwùyuán."},
+        {c:"不是", p:"bú shì", a:"ليس", s:"我妈妈不是老师，她是科学家。", sp:"Wǒ māma bú shì lǎoshī, tā shì kēxuéjiā."},
+        {c:"也", p:"yě", a:"أيضاً", s:"你爸爸是医生，我爸爸也是医生。", sp:"Nǐ bàba shì yīshēng, wǒ bàba yě shì yīshēng."},
+        {c:"点", p:"diǎn", a:"الساعة (للوقت)", s:"现在六点。", sp:"Xiànzài liù diǎn."},
+        {c:"半", p:"bàn", a:"نصف", s:"现在六点半。", sp:"Xiànzài liù diǎn bàn."},
+        {c:"几点", p:"jǐ diǎn", a:"أي ساعة", s:"你几点起床？", sp:"Nǐ jǐ diǎn qǐchuáng?"},
+        {c:"早上", p:"zǎoshang", a:"الصباح", s:"我早上六点起床。", sp:"Wǒ zǎoshang liù diǎn qǐchuáng."},
+        {c:"晚上", p:"wǎnshang", a:"المساء", s:"我晚上九点睡觉。", sp:"Wǒ wǎnshang jiǔ diǎn shuìjiào."},
+        {c:"起床", p:"qǐchuáng", a:"يستيقظ", s:"我早上六点起床。", sp:"Wǒ zǎoshang liù diǎn qǐchuáng."},
+        {c:"上学", p:"shàng xué", a:"يذهب للمدرسة", s:"我七点上学。", sp:"Wǒ qī diǎn shàng xué."},
+        {c:"睡觉", p:"shuìjiào", a:"ينام", s:"我晚上九点睡觉。", sp:"Wǒ wǎnshang jiǔ diǎn shuìjiào."},
+        {c:"吃饭", p:"chī fàn", a:"يأكل", s:"你几点吃饭？", sp:"Nǐ jǐ diǎn chī fàn?"},
+        {c:"祷告", p:"dǎogào", a:"صلاة", s:"你几点祷告？", sp:"Nǐ jǐ diǎn dǎogào?"},
+        {c:"回家", p:"huí jiā", a:"يعود للمنزل", s:"我三点回家。", sp:"Wǒ sān diǎn huí jiā."},
+        {c:"吃早饭", p:"chī zǎofàn", a:"يتناول الفطور", s:"我早上六点半吃早饭。", sp:"Wǒ zǎoshang liù diǎn bàn chī zǎofàn."}
+    ];
+    const list = document.getElementById('list');
+    level2Data.forEach(item => {
+        list.innerHTML += `
+        <div class="card">
+            <div class="word-section" onclick="speak('${item.c}', 0.8)">
+                <div class="word-box">
+                    <p class="word-zh">${item.c}</p>
+                    <p class="word-py">${item.p}</p>
+                    <p class="word-ar">${item.a}</p>
+                </div>
+                <div class="speaker">🔊</div>
+            </div>
+            <div class="sentence-section" onclick="speak('${item.s}', 0.5)">
+                <span class="s-label">EXAMPLE SENTENCE / 例句:</span>
+                <span class="s-py">${item.sp}</span>
+                <span class="s-zh">${item.s}</span>
+                <div style="text-align:right; margin-top:5px;"><span class="speaker" style="font-size:18px;">🔊</span></div>
+            </div>
+        </div>`;
+    });
+    function speak(text, rate) {
+        window.speechSynthesis.cancel();
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = rate;
+        window.speechSynthesis.speak(msg);
+    }
+</script>
+</body>
+</html>
