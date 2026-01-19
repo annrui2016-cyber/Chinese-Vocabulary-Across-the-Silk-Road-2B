@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Across the Silk Road - Level 5</title>
     <style>
-        :root { --primary: #d35400; --accent: #e67e22; --bg: #fdfdfd; }
+        :root { --primary: #e67e22; --accent: #d35400; --bg: #fdfdfd; }
         body { font-family: system-ui, sans-serif; background: var(--bg); margin: 0; padding-bottom: 40px; }
         header { background: linear-gradient(135deg, var(--primary), #2c3e50); color: white; padding: 25px 20px; text-align: center; }
         .container { padding: 15px; max-width: 600px; margin: 0 auto; }
@@ -15,7 +15,7 @@
         .word-zh { font-size: 32px; font-weight: bold; color: #333; margin: 0; }
         .word-py { font-size: 16px; color: var(--accent); margin-top: 5px; }
         .word-ar { font-size: 20px; color: #27ae60; direction: rtl; margin-top: 5px; font-weight: bold; }
-        .sentence-section { background: #fff5e6; padding: 15px; border-radius: 12px; margin-top: 15px; cursor: pointer; border: 1px dashed #d35400; }
+        .sentence-section { background: #fff5e6; padding: 15px; border-radius: 12px; margin-top: 15px; cursor: pointer; border: 1px dashed var(--primary); }
         .s-label { font-size: 11px; color: #999; font-weight: bold; margin-bottom: 5px; display: block; }
         .s-py { display: block; font-size: 14px; color: #666; margin-bottom: 4px; }
         .s-zh { font-size: 18px; color: #333; line-height: 1.4; display: block; }
@@ -26,40 +26,77 @@
 <header><h1>Level 5</h1><div style="font-size:14px; opacity:0.8;">Across the Silk Road • Term 2</div></header>
 <div class="container" id="list"></div>
 <script>
-    const data = [
-        {c:"房间", p:"fángjiān", a:"غرفة", s:"这是我的房间。", sp:"Zhè shì wǒ de fángjiān."},
-        {c:"里", p:"lǐ", a:"في / داخل", s:"房间里有什么？", sp:"Fángjiān lǐ yǒu shénme?"},
-        {c:"床", p:"chuáng", a:"سرير", s:"房间里有一张床。", sp:"Fángjiān lǐ yǒu yī zhāng chuáng."},
-        {c:"桌子", p:"zhuōzi", a:"طاولة", s:"桌子上有书。", sp:"Zhuōzi shàng yǒu shū."},
-        {c:"椅子", p:"yǐzi", a:"كرسي", s:"这儿有一把椅子。", sp:"Zhèr yǒu yī bǎ yǐzi."},
-        {c:"书架", p:"shūjià", a:"رف كتب", s:"书架上有许多书。", sp:"Shūjià shàng yǒu xǔduō shū."},
-        {c:"衣柜", p:"yīguì", a:"خزانة ملابس", s:"衣柜里有很多衣服。", sp:"Yīguì lǐ yǒu hěnduō yīfu."},
-        {c:"空调", p:"kōngtiáo", a:"مكيف هواء", s:"房间里有空调。", sp:"Fángjiān lǐ yǒu kōngtiáo."},
-        {c:"灯", p:"dēng", a:"مصباح", s:"请开灯。", sp:"Qǐng kāi dēng."},
-        {c:"上", p:"shàng", a:"فوق / على", s:"书在桌子上。", sp:"Shū zài zhuōzi shàng."},
-        {c:"下", p:"xià", a:"تحت", s:"小猫在椅子下。", sp:"Xiǎomāo zài yǐzi xià."},
-        {c:"张", p:"zhāng", a:"(أداة قياس للأسطح)", s:"一张床和一张桌子。", sp:"Yī zhāng chuáng hé yī zhāng zhuōzi."},
-        {c:"把", p:"bǎ", a:"(أداة قياس للكراسي)", s:"一把椅子。", sp:"Yī bǎ yǐzi."}
+    const level5Data = [
+        {c:"动物", p:"dòngwù", a:"حيوان", s:"你喜欢什么动物？", sp:"Nǐ xǐhuan shénme dòngwù?"},
+        {c:"动物园", p:"dòngwùyuán", a:"حديقة حيوان", s:"动物园里有什么？", sp:"Dòngwùyuán lǐ yǒu shénme?"},
+        {c:"熊猫", p:"xióngmāo", a:"باندا", s:"动物园里有两只熊猫。", sp:"Dòngwùyuán lǐ yǒu liǎng zhī xióngmāo."},
+        {c:"猫", p:"māo", a:"قطة", s:"我有一只猫。", sp:"Wǒ yǒu yī zhī māo."},
+        {c:"熊", p:"xióng", a:"دب", s:"那是一只熊。", sp:"Nà shì yī zhī xióng."},
+        {c:"狗", p:"gǒu", a:"كلب", s:"我有一只狗。", sp:"Wǒ yǒu yī zhī gǒu."},
+        {c:"豹子", p:"bàozi", a:"فهد", s:"那是一只豹子。", sp:"Nà shì yī zhī bàozi."},
+        {c:"鹰", p:"yīng", a:"صقر / نسر", s:"那里一只鹰。", sp:"Nàlǐ yī zhī yīng."},
+        {c:"狼", p:"láng", a:"ذئب", s:"那是一只狼。", sp:"Nà shì yī zhī láng."},
+        {c:"老虎", p:"lǎohǔ", a:"نمر", s:"那是一只老虎。", sp:"Nà shì yī zhī lǎohǔ."},
+        {c:"狮子", p:"shīzi", a:"أسد", s:"那是一只狮子。", sp:"Nà shì yī zhī shīzi."},
+        {c:"照片", p:"zhàopiàn", a:"صورة", s:"我手机里有很多熊猫的照片。", sp:"Wǒ shǒujī lǐ yǒu hěnduō xióngmāo de zhàopiàn."},
+        {c:"好玩儿", p:"hǎowánr", a:"ممتع", s:"迪拜动物园好玩儿吗？", sp:"Díbài dòngwùyuán hǎowánr ma?"},
+        {c:"非常", p:"fēicháng", a:"جداً", s:"迪拜动物园非常好玩儿。", sp:"Díbài dòngwùyuán fēicháng hǎowánr."},
+        {c:"上（面）", p:"shàng (mian)", a:"فوق / على", s:"树上有一只熊猫。", sp:"Shù shàng yǒu yī zhī xióngmāo."},
+        {c:"下（面）", p:"xià (mian)", a:"تحت", s:"树下有一只熊猫。", sp:"Shù xià yǒu yī zhī xióngmāo."},
+        {c:"可爱", p:"kě'ài", a:"لطيف", s:"熊猫太可爱了！", sp:"Xióngmāo tài kě'ài le!"},
+        {c:"有意思", p:"yǒuyìsi", a:"ممتع / ذو معنى", s:"这个故事真有意思。", sp:"Zhège gùshi zhēn yǒuyìsi."},
+        {c:"红色", p:"hóngsè", a:"أحمر", s:"兔子的眼睛是红色的。", sp:"Tùzi de yǎnjing shì hóngsè de."},
+        {c:"长", p:"cháng", a:"طويل", s:"兔子的耳朵很长。", sp:"Tùzi de ěrduo hěn cháng."},
+        {c:"短", p:"duǎn", a:"قصير", s:"兔子的腿很短。", sp:"Tùzi de tuǐ hěn duǎn."},
+        {c:"头", p:"tóu", a:"رأس", s:"熊猫的头很圆。", sp:"Xióngmāo de tóu hěn yuán."},
+        {c:"头发", p:"tóufa", a:"شعر", s:"姐姐的头发很长。", sp:"Jiějie de tóufa hěn cháng."},
+        {c:"眼睛", p:"yǎnjing", a:"عين", s:"我的眼睛很大。", sp:"Wǒ de yǎnjing hěn dà."},
+        {c:"鼻子", p:"bízi", a:"أنف", s:"大象的鼻子很长。", sp:"Dàxiàng de bízi hěn cháng."},
+        {c:"嘴", p:"zuǐ", a:"فم", s:"大象的嘴很大。", sp:"Dàxiàng de zuǐ hěn dà."},
+        {c:"耳朵", p:"ěrduo", a:"أذن", s:"大象的耳朵很大。", sp:"Dàxiàng de ěrduo hěn dà."},
+        {c:"胳膊", p:"gēbo", a:"ذراع", s:"我的胳膊很长。", sp:"Wǒ de gēbo hěn cháng."},
+        {c:"手", p:"shǒu", a:"يد", s:"我的手很小。", sp:"Wǒ de shǒu hěn xiǎo."},
+        {c:"腿", p:"tuǐ", a:"ساق", s:"兔子的腿很短。", sp:"Tùzi de tuǐ hěn duǎn."},
+        {c:"脚", p:"jiǎo", a:"قدم", s:"我的脚很小。", sp:"Wǒ de jiǎo hěn xiǎo."},
+        {c:"它", p:"tā", a:"هو/هي (لغير العاقل)", s:"它的嘴很大。", sp:"Tā de zuǐ hěn dà."},
+        {c:"只", p:"zhī", a:"(أداة قياس للحيوانات)", s:"这只熊猫很可爱。", sp:"Zhè zhī xióngmāo hěn kě'ài."},
+        {c:"生病", p:"shēngbìng", a:"مريض", s:"我生病了。", sp:"Wǒ shēngbìng le."},
+        {c:"疼", p:"téng", a:"ألم", s:"我头疼。", sp:"Wǒ tóu téng."},
+        {c:"应该", p:"yīnggāi", a:"يجب", s:"你应该多休息。", sp:"Nǐ yīnggāi duō xiūxi."},
+        {c:"觉得", p:"juéde", a:"يشعر / يعتقد", s:"我觉得吃水果对身体好。", sp:"Wǒ juéde chī shuǐguǒ duì shēntǐ hǎo."},
+        {c:"对", p:"duì", a:"لـ / تجاه", s:"运动对身体好。", sp:"Yùndòng duì shēntǐ hǎo."},
+        {c:"身体", p:"shēntǐ", a:"جسم / صحة", s:"运动对身体好。", sp:"Yùndòng duì shēntǐ hǎo."},
+        {c:"发烧", p:"fāshāo", a:"حمى", s:"我发烧了。", sp:"Wǒ fāshāo le."},
+        {c:"药", p:"yào", a:"دواء", s:"你吃药了吗？", sp:"Nǐ chī yào le ma?"},
+        {c:"为什么", p:"wèishénme", a:"لماذا", s:"你今天为什么没有来上课？", sp:"Nǐ jīntiān wèishénme méiyǒu lái shàngkè?"}
     ];
+
     const list = document.getElementById('list');
-    data.forEach(item => {
+    level5Data.forEach(item => {
         list.innerHTML += `
         <div class="card">
             <div class="word-section" onclick="speak('${item.c}', 0.8)">
-                <div class="word-box"><p class="word-zh">${item.c}</p><p class="word-py">${item.p}</p><p class="word-ar">${item.a}</p></div>
+                <div class="word-box">
+                    <p class="word-zh">${item.c}</p>
+                    <p class="word-py">${item.p}</p>
+                    <p class="word-ar">${item.a}</p>
+                </div>
                 <div class="speaker">🔊</div>
             </div>
             <div class="sentence-section" onclick="speak('${item.s}', 0.5)">
                 <span class="s-label">EXAMPLE SENTENCE:</span>
-                <span class="s-py">${item.sp}</span><span class="s-zh">${item.s}</span>
+                <span class="s-py">${item.sp}</span>
+                <span class="s-zh">${item.s}</span>
                 <div style="text-align:right;"><span class="speaker" style="font-size:18px;">🔊</span></div>
             </div>
         </div>`;
     });
+
     function speak(text, rate) {
         window.speechSynthesis.cancel();
         const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN'; msg.rate = rate;
+        msg.lang = 'zh-CN';
+        msg.rate = rate;
         window.speechSynthesis.speak(msg);
     }
 </script>
