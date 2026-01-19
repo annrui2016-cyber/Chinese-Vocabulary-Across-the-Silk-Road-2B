@@ -3,39 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Across the Silk Road - Pinyin Edition</title>
+    <title>Across the Silk Road - Term 2</title>
     <style>
         :root { --primary: #c0392b; --accent: #e67e22; --bg: #f4f7f6; --text: #2c3e50; }
         body { font-family: system-ui, sans-serif; background: var(--bg); margin: 0; padding-bottom: 40px; }
         header { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 20px; text-align: center; }
-        .level-selector { display: flex; overflow-x: auto; padding: 15px 10px; background: white; sticky; top: 0; z-index: 100; gap: 10px; border-bottom: 1px solid #eee; }
-        .level-btn { padding: 8px 18px; border-radius: 20px; border: 1px solid #ddd; background: white; cursor: pointer; white-space: nowrap; }
+        .level-selector { display: flex; overflow-x: auto; padding: 15px 10px; background: white; position: sticky; top: 0; z-index: 100; gap: 10px; border-bottom: 1px solid #eee; }
+        .level-btn { padding: 8px 18px; border-radius: 20px; border: 1px solid #ddd; background: white; cursor: pointer; white-space: nowrap; font-weight: bold; }
         .level-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
         .container { padding: 15px; max-width: 600px; margin: 0 auto; }
-        .card { background: white; border-radius: 15px; padding: 18px; margin-bottom: 15px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); border-left: 5px solid var(--primary); }
-        
-        /* 拼音样式优化 */
-        ruby { font-size: 24px; font-weight: bold; }
-        rt { font-size: 12px; color: #e67e22; font-weight: normal; margin-bottom: 2px; }
-        
-        .sentence-box { background: #fffcf5; padding: 12px; border-radius: 10px; border: 1px solid #f9e79f; margin-top: 10px; cursor: pointer; transition: 0.2s; }
-        .sentence-box:active { background: #f9e79f; }
-        .s-pinyin { display: block; font-size: 14px; color: #7f8c8d; margin-bottom: 4px; }
-        .s-text { font-size: 18px; color: #333; display: block; }
-        .audio-icon { float: right; color: var(--primary); font-size: 20px; }
+        .card { background: white; border-radius: 15px; padding: 18px; margin-bottom: 15px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); border-left: 5px solid var(--primary); cursor: pointer; }
+        .word-row { display: flex; align-items: center; justify-content: space-between; }
+        .word-text { font-size: 24px; font-weight: bold; color: #333; }
+        .pinyin-text { font-size: 16px; color: var(--accent); margin-left: 8px; font-weight: normal; }
+        .sentence-box { background: #fffcf5; padding: 12px; border-radius: 10px; border: 1px solid #f9e79f; margin-top: 10px; position: relative; }
+        .s-text { font-size: 17px; color: #555; display: block; line-height: 1.5; }
+        .audio-icon { font-size: 18px; margin-left: 10px; opacity: 0.6; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>Across the Silk Road</h1>
-    <div style="font-size:12px; opacity:0.8;">Term 2 • Chinese-English-Arabic Dictionary</div>
+    <div style="font-size:13px; opacity:0.9;">Term 2 • 词汇朗读词典</div>
 </header>
 
 <div class="level-selector">
     <button class="level-btn active" onclick="switchLevel(1)">Level 1</button>
     <button class="level-btn" onclick="switchLevel(2)">Level 2</button>
-    <button class="level-btn" onclick="alert('Level 3-6 拼音转换中，请先测试 L1-L2')">Level 3-6</button>
+    <button class="level-btn" onclick="switchLevel(3)">Level 3</button>
+    <button class="level-btn" onclick="switchLevel(4)">Level 4</button>
+    <button class="level-btn" onclick="switchLevel(5)">Level 5</button>
+    <button class="level-btn" onclick="switchLevel(6)">Level 6</button>
 </div>
 
 <div class="container" id="list"></div>
@@ -43,50 +42,72 @@
 <script>
     const allData = {
         1: [
-            {c:"<ruby>一<rt>yī</rt></ruby>", p:"wǒ mèimei yī suì", s:"我妹妹一岁。", e:"My sister is one year old."},
-            {c:"<ruby>二<rt>èr</rt></ruby>", p:"wǒ shí'èr suì", s:"我十二岁。", e:"I am twelve."},
-            {c:"<ruby>三<rt>sān</rt></ruby>", p:"wǒ dìdi sān suì", s:"我弟弟三岁。", e:"My brother is three."},
-            {c:"<ruby>四<rt>sì</rt></ruby>", p:"wǒ mèimei sì suì", s:"我妹妹四岁。", e:"My sister is four."},
-            {c:"<ruby>五<rt>wǔ</rt></ruby>", p:"wǒ dìdi wǔ suì", s:"我弟弟五岁。", e:"My brother is five."},
-            {c:"<ruby>六<rt>liù</rt></ruby>", p:"wǒ mèimei liù suì", s:"我妹妹六岁。", e:"My sister is six."},
-            {c:"<ruby>七<rt>qī</rt></ruby>", p:"wǒ dìdi qī suì", s:"我弟弟七岁。", e:"My brother is seven."},
-            {c:"<ruby>八<rt>bā</rt></ruby>", p:"wǒ mèimei bā suì", s:"我妹妹八岁。", e:"My sister is eight."},
-            {c:"<ruby>九<rt>jiǔ</rt></ruby>", p:"wǒ dìdi jiǔ suì", s:"我弟弟九岁。", e:"My brother is nine."},
-            {c:"<ruby>十<rt>shí</rt></ruby>", p:"wǒ shí suì", s:"我十岁。", e:"I am ten."},
-            {c:"<ruby>我<rt>wǒ</rt></ruby>", p:"wǒ shí'èr suì", s:"我十二岁。", e:"I am twelve."},
-            {c:"<ruby>你<rt>nǐ</rt></ruby>", p:"nǐ duō dà", s:"你多大？", e:"How old are you?"},
-            {c:"<ruby>阿联酋<rt>Āliánqiú</rt></ruby>", p:"zhè shì Āliánqiú", s:"这是阿联酋。", e:"This is UAE."}
+            {c:"一", p:"yī", s:"我妹妹一岁。", sp:"Wǒ mèimei yī suì."},
+            {c:"二", p:"èr", s:"我十二岁。", sp:"Wǒ shí'èr suì."},
+            {c:"三", p:"sān", s:"我弟弟三岁。", sp:"Wǒ dìdi sān suì."},
+            {c:"四", p:"sì", s:"我妹妹四岁。", sp:"Wǒ mèimei sì suì."},
+            {c:"五", p:"wǔ", s:"我弟弟五岁。", sp:"Wǒ dìdi wǔ suì."},
+            {c:"六", p:"liù", s:"我妹妹六岁。", sp:"Wǒ mèimei liù suì."},
+            {c:"七", p:"qī", s:"我弟弟七岁。", sp:"Wǒ dìdi qī suì."},
+            {c:"八", p:"bā", s:"我妹妹八岁。", sp:"Wǒ mèimei bā suì."},
+            {c:"九", p:"jiǔ", s:"我弟弟九岁。", sp:"Wǒ dìdi jiǔ suì."},
+            {c:"十", p:"shí", s:"我十岁。", sp:"Wǒ shí suì."},
+            {c:"十一", p:"shíyī", s:"我十一岁。", sp:"Wǒ shíyī suì."},
+            {c:"十二", p:"shí'èr", s:"我十二岁。", sp:"Wǒ shí'èr suì."},
+            {c:"我", p:"wǒ", s:"我十二岁。", sp:"Wǒ shí'èr suì."},
+            {c:"你", p:"nǐ", s:"你多大？", sp:"Nǐ duō dà?"},
+            {c:"我们", p:"wǒmen", s:"我们都十二岁。", sp:"Wǒmen dōu shí'èr suì."},
+            {c:"多大", p:"duō dà", s:"你多大？", sp:"Nǐ duō dà?"},
+            {c:"岁", p:"suì", s:"我十二岁。", sp:"Wǒ shí'èr suì."},
+            {c:"吗", p:"ma", s:"你是莉莉吗？", sp:"Nǐ shì Lìli ma?"},
+            {c:"也", p:"yě", s:"我也十二岁。", sp:"Wǒ yě shí'èr suì."},
+            {c:"都", p:"dōu", s:"我们都十二岁。", sp:"Wǒmen dōu shí'èr suì."},
+            {c:"星期一", p:"xīngqī yī", s:"今天星期一。", sp:"Jīntiān xīngqī yī."},
+            {c:"今天", p:"jīntiān", s:"今天星期四。", sp:"Jīntiān xīngqī sì."},
+            {c:"阿联酋", p:"Āliánqiú", s:"这是阿联酋。", sp:"Zhè shì Āliánqiú."}
         ],
         2: [
-            {c:"<ruby>祝<rt>zhù</rt></ruby>", p:"zhù nǐ shēngrì kuàilè", s:"祝你生日快乐！", e:"Wish you a happy birthday!"},
-            {c:"<ruby>生日<rt>shēngrì</rt></ruby>", p:"jīntiān shì wǒ de shēngrì", s:"今天是我的生日。", e:"Today is my birthday."},
-            {c:"<ruby>快乐<rt>kuàilè</rt></ruby>", p:"zhù nǐ shēngrì kuàilè", s:"祝你生日快乐！", e:"Happy birthday!"}
-        ]
+            {c:"祝", p:"zhù", s:"祝你生日快乐！", sp:"Zhù nǐ shēngrì kuàilè!"},
+            {c:"生日", p:"shēngrì", s:"今天是我的生日。", sp:"Jīntiān shì wǒ de shēngrì."},
+            {c:"快乐", p:"kuàilè", s:"祝你生日快乐！", sp:"Zhù nǐ shēngrì kuàilè!"},
+            {c:"礼物", p:"lǐwù", s:"这是你的生日礼物。", sp:"Zhè shì nǐ de shēngrì lǐwù."},
+            {c:"学生", p:"xuésheng", s:"我是学生。", sp:"Wǒ shì xuésheng."}
+        ],
+        3: [{c:"数据转换中", p:"loading", s:"请稍等...", sp:""}],
+        4: [{c:"数据转换中", p:"loading", s:"请稍等...", sp:""}],
+        5: [{c:"数据转换中", p:"loading", s:"请稍等...", sp:""}],
+        6: [{c:"数据转换中", p:"loading", s:"请稍等...", sp:""}]
     };
 
     function switchLevel(lvl) {
+        document.querySelectorAll('.level-btn').forEach((btn, idx) => {
+            btn.classList.toggle('active', idx + 1 === lvl);
+        });
         const list = document.getElementById('list');
-        const data = allData[lvl];
+        const data = allData[lvl] || [];
         let html = '';
         data.forEach(item => {
             html += `
-            <div class="card">
-                <div onclick="speak('${item.c.replace(/<[^>]+>/g, '')}')">${item.c} <span style="font-size:12px; color:#999;">🔊点我</span></div>
-                <div class="sentence-box" onclick="speak('${item.s}')">
+            <div class="card" onclick="speak('${item.c}')">
+                <div class="word-row">
+                    <div class="word-text">${item.c} <span class="pinyin-text">(${item.p})</span></div>
                     <span class="audio-icon">🔊</span>
-                    <span class="s-pinyin">${item.p}</span>
+                </div>
+                <div class="sentence-box" onclick="event.stopPropagation(); speak('${item.s}')">
+                    <span class="s-text"><b>${item.sp}</b></span>
                     <span class="s-text">${item.s}</span>
                 </div>
             </div>`;
         });
         list.innerHTML = html;
+        window.scrollTo(0,0);
     }
 
     function speak(t) {
         window.speechSynthesis.cancel();
         const msg = new SpeechSynthesisUtterance(t);
         msg.lang = 'zh-CN';
-        msg.rate = 0.75;
+        msg.rate = 0.8;
         window.speechSynthesis.speak(msg);
     }
 
