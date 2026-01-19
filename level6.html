@@ -15,7 +15,7 @@
         .word-zh { font-size: 32px; font-weight: bold; color: #333; margin: 0; }
         .word-py { font-size: 16px; color: var(--accent); margin-top: 5px; }
         .word-ar { font-size: 20px; color: #27ae60; direction: rtl; margin-top: 5px; font-weight: bold; }
-        .sentence-section { background: #fdf2f2; padding: 15px; border-radius: 12px; margin-top: 15px; cursor: pointer; border: 1px dashed #c0392b; }
+        .sentence-section { background: #fdf2f2; padding: 15px; border-radius: 12px; margin-top: 15px; cursor: pointer; border: 1px dashed var(--primary); }
         .s-label { font-size: 11px; color: #999; font-weight: bold; margin-bottom: 5px; display: block; }
         .s-py { display: block; font-size: 14px; color: #666; margin-bottom: 4px; }
         .s-zh { font-size: 18px; color: #333; line-height: 1.4; display: block; }
@@ -26,40 +26,64 @@
 <header><h1>Level 6</h1><div style="font-size:14px; opacity:0.8;">Across the Silk Road • Term 2</div></header>
 <div class="container" id="list"></div>
 <script>
-    const data = [
-        {c:"身体", p:"shēntǐ", a:"جسم", s:"你要注意身体。", sp:"Nǐ yào zhùyì shēntǐ."},
-        {c:"头", p:"tóu", a:"رأس", s:"我的头很疼。", sp:"Wǒ de tóu hěn téng."},
-        {c:"眼睛", p:"yǎnjing", a:"عين", s:"她的眼睛很漂亮。", sp:"Tā de yǎnjing hěn piàoliang."},
-        {c:"耳朵", p:"ěrduo", a:"أذن", s:"兔子有长耳朵。", sp:"Tùzi yǒu cháng ěrduo."},
-        {c:"鼻子", p:"bízi", a:"أنف", s:"大象有长鼻子。", sp:"Dàxiàng yǒu cháng bízi."},
-        {c:"嘴巴", p:"zuǐba", a:"فم", s:"张开嘴巴。", sp:"Zhāngkāi zuǐba."},
-        {c:"手", p:"shǒu", a:"يد", s:"洗洗手。", sp:"Xǐxishǒu."},
-        {c:"脚", p:"jiǎo", a:"قدم", s:"我的脚疼。", sp:"Wǒ de jiǎo téng."},
-        {c:"长", p:"cháng", a:"طويل", s:"她的头发很长。", sp:"Tā de tóufa hěn cháng."},
-        {c:"疼", p:"téng", a:"ألم / يؤلم", s:"我牙疼。", sp:"Wǒ yá téng."},
-        {c:"感冒", p:"gǎnmào", a:"زكام / نزل برد", s:"我感冒了。", sp:"Wǒ gǎnmào le."},
-        {c:"药", p:"yào", a:"دواء", s:"记得吃药。", sp:"Jìde chī yào."},
-        {c:"舒服", p:"shūfu", a:"مرتاح", s:"我身体不舒服。", sp:"Wǒ shēntǐ bù shūfu."}
+    const level6Data = [
+        {c:"会", p:"huì", a:"سوف / سـ", s:"老师会通知我们。", sp:"Lǎoshī huì tōngzhī wǒmen."},
+        {c:"博物馆", p:"bówùguǎn", a:"متحف", s:"明天我们去参观博物馆。", sp:"Míngtiān wǒmen qù cānguān bówùguǎn."},
+        {c:"自己", p:"zìjǐ", a:"بنفسه / ذاته", s:"我们要不要自己买门票？", sp:"Wǒmen yào bú yào zìjǐ mǎi ménpiào?"},
+        {c:"门票", p:"ménpiào", a:"تذكرة دخول", s:"门票多少钱一张？", sp:"Ménpiào duōshǎo qián yī zhāng?"},
+        {c:"通知", p:"tōngzhī", a:"يخبر / يبلغ / إشعار", s:"老师会通知我们的。", sp:"Lǎoshī huì tōngzhī wǒmen de."},
+        {c:"不用", p:"búyòng", a:"لا داعي / لست بحاجة", s:"我们不用自己买门票。", sp:"Wǒmen búyòng zìjǐ mǎi ménpiào."},
+        {c:"报名", p:"bào mìng", a:"يسجل / يشترك", s:"我已经报名了。", sp:"Wǒ yǐjīng bàomíng le."},
+        {c:"希望", p:"xīwàng", a:"يأمل / يتمنى", s:"我特别希望你跟我们一起去博物馆。", sp:"Wǒ tèbié xīwàng nǐ gēn wǒmen yīqǐ qù bówùguǎn."},
+        {c:"明白", p:"míngbai", a:"يفهم", s:"我明白了。", sp:"Wǒ míngbai le."},
+        {c:"怎么", p:"zěnme", a:"كيف", s:"我们怎么去博物馆？", sp:"Wǒmen zěnme qù bówùguǎn?"},
+        {c:"坐车", p:"zuò chē", a:"يركب السيارة / الحافلة", s:"我们坐车去博物馆。", sp:"Wǒmen zuò chē qù bówùguǎn."},
+        {c:"篇", p:"piān", a:"(أداة قياس للمقالات/اليوميات)", s:"一篇日记", sp:"Yī piān rìjì"},
+        {c:"日记", p:"rìjì", a:"يوميات", s:"我写了一篇日记。", sp:"Wǒ xiěle yī piān rìjì."},
+        {c:"发", p:"fā", a:"يرسل", s:"我给你发了一篇日记。", sp:"Wǒ gěi nǐ fāle yī piān rìjì."},
+        {c:"记", p:"jì", a:"يسجل / يدون", s:"我一边参观一边记笔记。", sp:"Wǒ yībiān cānguān yībiān jì bǐjì."},
+        {c:"知识", p:"zhīshi", a:"معرفة / معلومات", s:"我学到了很多知识。", sp:"Wǒ xuédàole hěnduō zhīshi."},
+        {c:"认真", p:"rènzhēn", a:"بجدية / بتركيز", s:"我们每天都认真听课。", sp:"Wǒmen měitiān dōu rènzhēn tīngkè."},
+        {c:"次", p:"cì", a:"مرة", s:"这是我第一次参观博物馆。", sp:"Zhè shì wǒ dì yī cì cānguān bówùguǎn."},
+        {c:"一边", p:"yībiān", a:"في نفس الوقت (بينما)", s:"我们一边参观一边拍照。", sp:"Wǒmen yībiān cānguān yībiān pāizhào."},
+        {c:"有点儿", p:"yǒudiǎnr", a:"قليلاً (للأمور السلبية غالباً)", s:"今天我有点儿累。", sp:"Jīntiān wǒ yǒudiǎnr lèi."},
+        {c:"但是", p:"dànshì", a:"لكن", s:"中文有点儿难，但是我很喜欢学习中文。", sp:"Zhōngwén yǒudiǎnr nán, dànshì wǒ hěn xǐhuan xuéxí Zhōngwén."},
+        {c:"介绍", p:"jièshào", a:"يعرف / يقدم", s:"我想用汉语介绍一下阿联酋的博物馆。", sp:"Wǒ xiǎng yòng Hànyǔ jièshào yīxià Āliánqiú de bówùguǎn."},
+        {c:"越来越", p:"yuèláiyuè", a:"أكثر فأكثر", s:"你的汉语越来越好。", sp:"Nǐ de Hànyǔ yuèláiyuè hǎo."},
+        {c:"作文", p:"zuòwén", a:"تعبير / مقال", s:"可以请你帮我看看我的作文吗？", sp:"Kěyǐ qǐng nǐ bāng wǒ kànkan wǒ de zuòwén ma?"},
+        {c:"努力", p:"nǔlì", a:"مجتهد", s:"你学习真努力。", sp:"Nǐ xuéxí zhēn nǔlì."},
+        {c:"帮助", p:"bāngzhù", a:"مساعدة", s:"谢谢你的帮助！", sp:"Xièxie nǐ de bāngzhù!"},
+        {c:"机会", p:"jīhuì", a:"فرصة", s:"到了中国以后，我用汉语的机会越来越多。", sp:"Dàole Zhōngguó yǐhòu, wǒ yòng Hànyǔ de jīhuì yuèláiyuè duō."},
+        {c:"便宜", p:"piányi", a:"رخيص", s:"汽车越来越便宜。", sp:"Qìchē yuèláiyuè piányi."},
+        {c:"贵", p:"guì", a:"غالٍ", s:"水果越来越贵。", sp:"Shuǐguǒ yuèláiyuè guì."}
     ];
+
     const list = document.getElementById('list');
-    data.forEach(item => {
+    level6Data.forEach(item => {
         list.innerHTML += `
         <div class="card">
             <div class="word-section" onclick="speak('${item.c}', 0.8)">
-                <div class="word-box"><p class="word-zh">${item.c}</p><p class="word-py">${item.p}</p><p class="word-ar">${item.a}</p></div>
+                <div class="word-box">
+                    <p class="word-zh">${item.c}</p>
+                    <p class="word-py">${item.p}</p>
+                    <p class="word-ar">${item.a}</p>
+                </div>
                 <div class="speaker">🔊</div>
             </div>
             <div class="sentence-section" onclick="speak('${item.s}', 0.5)">
                 <span class="s-label">EXAMPLE SENTENCE:</span>
-                <span class="s-py">${item.sp}</span><span class="s-zh">${item.s}</span>
+                <span class="s-py">${item.sp}</span>
+                <span class="s-zh">${item.s}</span>
                 <div style="text-align:right;"><span class="speaker" style="font-size:18px;">🔊</span></div>
             </div>
         </div>`;
     });
+
     function speak(text, rate) {
         window.speechSynthesis.cancel();
         const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN'; msg.rate = rate;
+        msg.lang = 'zh-CN';
+        msg.rate = rate;
         window.speechSynthesis.speak(msg);
     }
 </script>
