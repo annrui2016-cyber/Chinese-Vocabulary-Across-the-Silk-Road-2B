@@ -73,4 +73,66 @@
             {c:"都", p:"dōu", s:"我们都十二岁。", sp:"Wǒmen dōu shí'èr suì."},
             {c:"星期一", p:"xīngqī yī", s:"今天星期一。", sp:"Jīntiān xīngqī yī."},
             {c:"今天", p:"jīntiān", s:"今天星期四。", sp:"Jīntiān xīngqī sì."},
-            {c:"明天", p:"míngtiān", s:"明天星期五。", sp:"M
+            {c:"明天", p:"míngtiān", s:"明天星期五。", sp:"Míngtiān xīngqī wǔ."},
+            {c:"上课", p:"shàngkè", s:"今天我不上课。", sp:"Jīntiān wǒ bù shàngkè."},
+            {c:"几", p:"jǐ", s:"今天星期几？", sp:"Jīntiān xīngqī jǐ?"},
+            {c:"阿联酋", p:"Āliánqiú", s:"这是阿联酋。", sp:"Zhè shì Āliánqiú."},
+            {c:"中国", p:"Zhōngguó", s:"这是中国。", sp:"Zhè shì Zhōngguó."},
+            {c:"国家", p:"guójiā", s:"这是什么国家？", sp:"Zhè shì shénme guójiā?"}
+        ],
+        2: [
+            {c:"祝", p:"zhù", s:"祝你生日快乐！", sp:"Zhù nǐ shēngrì kuàilè!"},
+            {c:"生日", p:"shēngrì", s:"今天是我的生日。", sp:"Jīntiān shì wǒ de shēngrì."},
+            {c:"快乐", p:"kuàilè", s:"祝你生日快乐！", sp:"Zhù nǐ shēngrì kuàilè!"},
+            {c:"礼物", p:"lǐwù", s:"这是你的生日礼物。", sp:"Zhè shì nǐ de shēngrì lǐwù."},
+            {c:"学生", p:"xuésheng", s:"我是学生。", sp:"Wǒ shì xuésheng."},
+            {c:"医生", p:"yīshēng", s:"我爸爸是医生。", sp:"Wǒ bàba shì yīshēng."},
+            {c:"警察", p:"jǐngchá", s:"我爸爸是警察。", sp:"Wǒ bàba shì jǐngchá."},
+            {c:"宇航员", p:"yǔhángyuán", s:"我想当宇航员。", sp:"Wǒ xiǎng dāng yǔhángyuán."},
+            {c:"工作", p:"gōngzuò", s:"你妈妈做什么工作？", sp:"Nǐ māma zuò shénme gōngzuò?"}
+        ],
+        // L3-L6 待转换拼音...
+    };
+
+    function switchLevel(lvl) {
+        document.querySelectorAll('.level-btn').forEach((btn, idx) => {
+            btn.classList.toggle('active', idx + 1 === lvl);
+        });
+        const list = document.getElementById('list');
+        const data = allData[lvl] || [];
+        let html = '';
+        if(data.length === 0) html = '<p style="text-align:center; color:#999;">拼音转换中，敬请期待...</p>';
+        
+        data.forEach(item => {
+            html += `
+            <div class="card">
+                <div class="word-area" onclick="speak('${item.c}', 0.8)">
+                    <div class="word-text">${item.c} <span class="pinyin-tag">(${item.p})</span></div>
+                    <span class="speaker-icon">🔊</span>
+                </div>
+                <div class="sentence-box" onclick="speak('${item.s}', 0.6)">
+                    <span class="s-pinyin">${item.sp}</span>
+                    <div class="s-chinese">
+                        <span>${item.s}</span>
+                        <span class="speaker-icon">🔊</span>
+                    </div>
+                </div>
+            </div>`;
+        });
+        list.innerHTML = html;
+        window.scrollTo(0,0);
+    }
+
+    function speak(text, speed) {
+        window.speechSynthesis.cancel();
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = speed; // 传入指定的语速
+        window.speechSynthesis.speak(msg);
+    }
+
+    window.onload = () => switchLevel(1);
+</script>
+
+</body>
+</html>
