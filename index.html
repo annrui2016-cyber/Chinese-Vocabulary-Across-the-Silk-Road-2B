@@ -2,137 +2,95 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Across the Silk Road - Term 2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Across the Silk Road - Home</title>
     <style>
-        :root { --primary: #c0392b; --accent: #e67e22; --bg: #f4f7f6; }
-        body { font-family: system-ui, sans-serif; background: var(--bg); margin: 0; padding-bottom: 40px; -webkit-tap-highlight-color: transparent; }
-        header { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .level-selector { display: flex; overflow-x: auto; padding: 15px 10px; background: white; position: sticky; top: 0; z-index: 100; gap: 10px; border-bottom: 1px solid #eee; }
-        .level-btn { padding: 10px 20px; border-radius: 25px; border: 1px solid #ddd; background: white; cursor: pointer; white-space: nowrap; font-weight: bold; color: #7f8c8d; }
-        .level-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 3px 8px rgba(192,57,43,0.3); }
-        .container { padding: 15px; max-width: 600px; margin: 0 auto; }
+        :root { --primary: #00732f; --secondary: #2c3e50; }
+        body { font-family: system-ui, -apple-system, sans-serif; background-color: #f4f7f6; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        header { background: linear-gradient(135deg, var(--primary), #000); color: white; width: 100%; padding: 40px 20px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); box-sizing: border-box; }
+        h1 { margin: 0; font-size: 28px; }
+        .subtitle { opacity: 0.9; margin-top: 10px; font-size: 16px; }
         
-        /* 词条卡片 */
-        .card { background: white; border-radius: 18px; padding: 18px; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-left: 6px solid var(--primary); }
-        .word-area { display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px; cursor: pointer; }
-        .word-text { font-size: 26px; font-weight: bold; color: #2c3e50; }
-        .pinyin-tag { font-size: 16px; color: var(--accent); margin-left: 8px; font-weight: normal; }
+        .menu-container { padding: 30px 20px; display: grid; grid-template-columns: 1fr; gap: 15px; width: 100%; max-width: 400px; box-sizing: border-box; }
         
-        /* 例句区域样式 */
-        .sentence-box { 
-            background: #fff9f0; padding: 15px; border-radius: 12px; 
-            border: 1px solid #ffecdb; cursor: pointer; transition: 0.2s;
+        .level-card { 
+            background: white; border-radius: 15px; padding: 20px; 
+            text-decoration: none; color: var(--secondary);
+            display: flex; align-items: center; justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #eee;
         }
-        .sentence-box:active { background: #ffe0c1; }
-        .s-pinyin { display: block; font-size: 14px; color: #e67e22; margin-bottom: 5px; font-family: "Courier New", Courier, monospace; }
-        .s-chinese { font-size: 19px; color: #333; display: flex; align-items: center; justify-content: space-between; }
-        .speaker-icon { font-size: 18px; color: var(--primary); opacity: 0.8; }
+        .level-card:active { transform: scale(0.98); background-color: #fafafa; }
+        
+        .level-info { display: flex; flex-direction: column; }
+        .level-title { font-size: 20px; font-weight: bold; color: var(--primary); }
+        .level-desc { font-size: 14px; color: #666; margin-top: 4px; }
+        .arrow { font-size: 20px; color: #ccc; }
+
+        footer { margin-top: auto; padding: 20px; color: #999; font-size: 12px; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>Across the Silk Road</h1>
-    <div style="font-size:13px; opacity:0.9;">Term 2 • 慢速清晰朗读词典</div>
+    <div class="subtitle">HSK Vocabulary Builder - Term 2</div>
 </header>
 
-<div class="level-selector">
-    <button class="level-btn active" onclick="switchLevel(1)">Level 1</button>
-    <button class="level-btn" onclick="switchLevel(2)">Level 2</button>
-    <button class="level-btn" onclick="switchLevel(3)">Level 3</button>
-    <button class="level-btn" onclick="switchLevel(4)">Level 4</button>
-    <button class="level-btn" onclick="switchLevel(5)">Level 5</button>
-    <button class="level-btn" onclick="switchLevel(6)">Level 6</button>
+<div class="menu-container">
+    <a href="level1.html" class="level-card">
+        <div class="level-info">
+            <span class="level-title">Level 1</span>
+            <span class="level-desc">Numbers, Self-intro, Countries</span>
+        </div>
+        <span class="arrow">➔</span>
+    </a>
+
+    <a href="level2.html" class="level-card">
+        <div class="level-info">
+            <span class="level-title">Level 2</span>
+            <span class="level-desc">Birthday, Jobs, Daily Routine</span>
+        </div>
+        <span class="arrow">➔</span>
+    </a>
+
+    <a href="level3.html" class="level-card">
+        <div class="level-info">
+            <span class="level-title">Level 3</span>
+            <span class="level-desc">Colors, Places, Hobbies</span>
+        </div>
+        <span class="arrow">➔</span>
+    </a>
+
+    <a href="level4.html" class="level-card">
+        <div class="level-info">
+            <span class="level-title">Level 4</span>
+            <span class="level-desc">Workplace, Ordering Food, Shopping</span>
+        </div>
+        <span class="arrow">➔</span>
+    </a>
+
+    <a href="level5.html" class="level-card">
+        <div class="level-info">
+            <span class="level-title">Level 5</span>
+            <span class="level-desc">Rooms, Furniture, Positions</span>
+        </div>
+        <span class="arrow">➔</span>
+    </a>
+
+    <a href="level6.html" class="level-card">
+        <div class="level-info">
+            <span class="level-title">Level 6</span>
+            <span class="level-desc">Body Parts, Health, Feelings</span>
+        </div>
+        <span class="arrow">➔</span>
+    </a>
 </div>
 
-<div class="container" id="list"></div>
-
-<script>
-    const allData = {
-        1: [
-            {c:"一", p:"yī", s:"我妹妹一岁。", sp:"Wǒ mèimei yī suì."},
-            {c:"二", p:"èr", s:"我十二岁。", sp:"Wǒ shí'èr suì."},
-            {c:"三", p:"sān", s:"我弟弟三岁。", sp:"Wǒ dìdi sān suì."},
-            {c:"四", p:"sì", s:"我妹妹四岁。", sp:"Wǒ mèimei sì suì."},
-            {c:"五", p:"wǔ", s:"我弟弟五岁。", sp:"Wǒ dìdi wǔ suì."},
-            {c:"六", p:"liù", s:"我妹妹六岁。", sp:"Wǒ mèimei liù suì."},
-            {c:"七", p:"qī", s:"我弟弟七岁。", sp:"Wǒ dìdi qī suì."},
-            {c:"八", p:"bā", s:"我妹妹八岁。", sp:"Wǒ mèimei bā suì."},
-            {c:"九", p:"jiǔ", s:"我弟弟九岁。", sp:"Wǒ dìdi jiǔ suì."},
-            {c:"十", p:"shí", s:"我十岁。", sp:"Wǒ shí suì."},
-            {c:"十一", p:"shíyī", s:"我十一岁。", sp:"Wǒ shíyī suì."},
-            {c:"十二", p:"shí'èr", s:"我十二岁。", sp:"Wǒ shí'èr suì."},
-            {c:"我", p:"wǒ", s:"我十二岁。", sp:"Wǒ shí'èr suì."},
-            {c:"你", p:"nǐ", s:"你多大？", sp:"Nǐ duō dà?"},
-            {c:"我们", p:"wǒmen", s:"我们都十二岁。", sp:"Wǒmen dōu shí'èr suì."},
-            {c:"多大", p:"duō dà", s:"你多大？", sp:"Nǐ duō dà?"},
-            {c:"岁", p:"suì", s:"我十二岁。", sp:"Wǒ shí'èr suì."},
-            {c:"吗", p:"ma", s:"你是莉莉吗？", sp:"Nǐ shì Lìli ma?"},
-            {c:"也", p:"yě", s:"我也十二岁。", sp:"Wǒ yě shí'èr suì."},
-            {c:"都", p:"dōu", s:"我们都十二岁。", sp:"Wǒmen dōu shí'èr suì."},
-            {c:"星期一", p:"xīngqī yī", s:"今天星期一。", sp:"Jīntiān xīngqī yī."},
-            {c:"今天", p:"jīntiān", s:"今天星期四。", sp:"Jīntiān xīngqī sì."},
-            {c:"明天", p:"míngtiān", s:"明天星期五。", sp:"Míngtiān xīngqī wǔ."},
-            {c:"上课", p:"shàngkè", s:"今天我不上课。", sp:"Jīntiān wǒ bù shàngkè."},
-            {c:"几", p:"jǐ", s:"今天星期几？", sp:"Jīntiān xīngqī jǐ?"},
-            {c:"阿联酋", p:"Āliánqiú", s:"这是阿联酋。", sp:"Zhè shì Āliánqiú."},
-            {c:"中国", p:"Zhōngguó", s:"这是中国。", sp:"Zhè shì Zhōngguó."},
-            {c:"国家", p:"guójiā", s:"这是什么国家？", sp:"Zhè shì shénme guójiā?"}
-        ],
-        2: [
-            {c:"祝", p:"zhù", s:"祝你生日快乐！", sp:"Zhù nǐ shēngrì kuàilè!"},
-            {c:"生日", p:"shēngrì", s:"今天是我的生日。", sp:"Jīntiān shì wǒ de shēngrì."},
-            {c:"快乐", p:"kuàilè", s:"祝你生日快乐！", sp:"Zhù nǐ shēngrì kuàilè!"},
-            {c:"礼物", p:"lǐwù", s:"这是你的生日礼物。", sp:"Zhè shì nǐ de shēngrì lǐwù."},
-            {c:"学生", p:"xuésheng", s:"我是学生。", sp:"Wǒ shì xuésheng."},
-            {c:"医生", p:"yīshēng", s:"我爸爸是医生。", sp:"Wǒ bàba shì yīshēng."},
-            {c:"警察", p:"jǐngchá", s:"我爸爸是警察。", sp:"Wǒ bàba shì jǐngchá."},
-            {c:"宇航员", p:"yǔhángyuán", s:"我想当宇航员。", sp:"Wǒ xiǎng dāng yǔhángyuán."},
-            {c:"工作", p:"gōngzuò", s:"你妈妈做什么工作？", sp:"Nǐ māma zuò shénme gōngzuò?"}
-        ],
-        // L3-L6 待转换拼音...
-    };
-
-    function switchLevel(lvl) {
-        document.querySelectorAll('.level-btn').forEach((btn, idx) => {
-            btn.classList.toggle('active', idx + 1 === lvl);
-        });
-        const list = document.getElementById('list');
-        const data = allData[lvl] || [];
-        let html = '';
-        if(data.length === 0) html = '<p style="text-align:center; color:#999;">拼音转换中，敬请期待...</p>';
-        
-        data.forEach(item => {
-            html += `
-            <div class="card">
-                <div class="word-area" onclick="speak('${item.c}', 0.8)">
-                    <div class="word-text">${item.c} <span class="pinyin-tag">(${item.p})</span></div>
-                    <span class="speaker-icon">🔊</span>
-                </div>
-                <div class="sentence-box" onclick="speak('${item.s}', 0.6)">
-                    <span class="s-pinyin">${item.sp}</span>
-                    <div class="s-chinese">
-                        <span>${item.s}</span>
-                        <span class="speaker-icon">🔊</span>
-                    </div>
-                </div>
-            </div>`;
-        });
-        list.innerHTML = html;
-        window.scrollTo(0,0);
-    }
-
-    function speak(text, speed) {
-        window.speechSynthesis.cancel();
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        msg.rate = speed; // 传入指定的语速
-        window.speechSynthesis.speak(msg);
-    }
-
-    window.onload = () => switchLevel(1);
-</script>
+<footer>
+    &copy; 2024 Chinese Department - Silk Road Program
+</footer>
 
 </body>
 </html>
