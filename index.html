@@ -5,27 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Across the Silk Road - Term 2</title>
     <style>
-        :root { --primary: #c0392b; --accent: #e67e22; --bg: #f4f7f6; --text: #2c3e50; }
-        body { font-family: system-ui, sans-serif; background: var(--bg); margin: 0; padding-bottom: 40px; }
-        header { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 20px; text-align: center; }
+        :root { --primary: #c0392b; --accent: #e67e22; --bg: #f4f7f6; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); margin: 0; padding-bottom: 40px; -webkit-tap-highlight-color: transparent; }
+        header { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .level-selector { display: flex; overflow-x: auto; padding: 15px 10px; background: white; position: sticky; top: 0; z-index: 100; gap: 10px; border-bottom: 1px solid #eee; }
-        .level-btn { padding: 8px 18px; border-radius: 20px; border: 1px solid #ddd; background: white; cursor: pointer; white-space: nowrap; font-weight: bold; }
-        .level-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .level-btn { padding: 10px 20px; border-radius: 25px; border: 1px solid #ddd; background: white; cursor: pointer; white-space: nowrap; font-weight: bold; color: #7f8c8d; }
+        .level-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 3px 8px rgba(192,57,43,0.3); }
         .container { padding: 15px; max-width: 600px; margin: 0 auto; }
-        .card { background: white; border-radius: 15px; padding: 18px; margin-bottom: 15px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); border-left: 5px solid var(--primary); cursor: pointer; }
-        .word-row { display: flex; align-items: center; justify-content: space-between; }
-        .word-text { font-size: 24px; font-weight: bold; color: #333; }
-        .pinyin-text { font-size: 16px; color: var(--accent); margin-left: 8px; font-weight: normal; }
-        .sentence-box { background: #fffcf5; padding: 12px; border-radius: 10px; border: 1px solid #f9e79f; margin-top: 10px; position: relative; }
-        .s-text { font-size: 17px; color: #555; display: block; line-height: 1.5; }
-        .audio-icon { font-size: 18px; margin-left: 10px; opacity: 0.6; }
+        
+        /* 词条卡片 */
+        .card { background: white; border-radius: 18px; padding: 18px; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-left: 6px solid var(--primary); }
+        .word-area { display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px; cursor: pointer; }
+        .word-text { font-size: 26px; font-weight: bold; color: #2c3e50; }
+        .pinyin-tag { font-size: 16px; color: var(--accent); margin-left: 8px; font-weight: normal; }
+        
+        /* 例句区域样式 */
+        .sentence-box { 
+            background: #fff9f0; padding: 15px; border-radius: 12px; 
+            border: 1px solid #ffecdb; cursor: pointer; transition: 0.2s;
+        }
+        .sentence-box:active { background: #ffe0c1; }
+        .s-pinyin { display: block; font-size: 14px; color: #e67e22; margin-bottom: 5px; font-family: "Courier New", Courier, monospace; }
+        .s-chinese { font-size: 19px; color: #333; display: flex; align-items: center; justify-content: space-between; }
+        .speaker-icon { font-size: 18px; color: var(--primary); opacity: 0.8; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>Across the Silk Road</h1>
-    <div style="font-size:13px; opacity:0.9;">Term 2 • 词汇朗读词典</div>
+    <div style="font-size:13px; opacity:0.9;">Term 2 • 慢速清晰朗读词典</div>
 </header>
 
 <div class="level-selector">
@@ -64,54 +73,4 @@
             {c:"都", p:"dōu", s:"我们都十二岁。", sp:"Wǒmen dōu shí'èr suì."},
             {c:"星期一", p:"xīngqī yī", s:"今天星期一。", sp:"Jīntiān xīngqī yī."},
             {c:"今天", p:"jīntiān", s:"今天星期四。", sp:"Jīntiān xīngqī sì."},
-            {c:"阿联酋", p:"Āliánqiú", s:"这是阿联酋。", sp:"Zhè shì Āliánqiú."}
-        ],
-        2: [
-            {c:"祝", p:"zhù", s:"祝你生日快乐！", sp:"Zhù nǐ shēngrì kuàilè!"},
-            {c:"生日", p:"shēngrì", s:"今天是我的生日。", sp:"Jīntiān shì wǒ de shēngrì."},
-            {c:"快乐", p:"kuàilè", s:"祝你生日快乐！", sp:"Zhù nǐ shēngrì kuàilè!"},
-            {c:"礼物", p:"lǐwù", s:"这是你的生日礼物。", sp:"Zhè shì nǐ de shēngrì lǐwù."},
-            {c:"学生", p:"xuésheng", s:"我是学生。", sp:"Wǒ shì xuésheng."}
-        ],
-        3: [{c:"数据转换中", p:"loading", s:"请稍等...", sp:""}],
-        4: [{c:"数据转换中", p:"loading", s:"请稍等...", sp:""}],
-        5: [{c:"数据转换中", p:"loading", s:"请稍等...", sp:""}],
-        6: [{c:"数据转换中", p:"loading", s:"请稍等...", sp:""}]
-    };
-
-    function switchLevel(lvl) {
-        document.querySelectorAll('.level-btn').forEach((btn, idx) => {
-            btn.classList.toggle('active', idx + 1 === lvl);
-        });
-        const list = document.getElementById('list');
-        const data = allData[lvl] || [];
-        let html = '';
-        data.forEach(item => {
-            html += `
-            <div class="card" onclick="speak('${item.c}')">
-                <div class="word-row">
-                    <div class="word-text">${item.c} <span class="pinyin-text">(${item.p})</span></div>
-                    <span class="audio-icon">🔊</span>
-                </div>
-                <div class="sentence-box" onclick="event.stopPropagation(); speak('${item.s}')">
-                    <span class="s-text"><b>${item.sp}</b></span>
-                    <span class="s-text">${item.s}</span>
-                </div>
-            </div>`;
-        });
-        list.innerHTML = html;
-        window.scrollTo(0,0);
-    }
-
-    function speak(t) {
-        window.speechSynthesis.cancel();
-        const msg = new SpeechSynthesisUtterance(t);
-        msg.lang = 'zh-CN';
-        msg.rate = 0.8;
-        window.speechSynthesis.speak(msg);
-    }
-
-    window.onload = () => switchLevel(1);
-</script>
-</body>
-</html>
+            {c:"明天", p:"míngtiān", s:"明天星期五。", sp:"M
