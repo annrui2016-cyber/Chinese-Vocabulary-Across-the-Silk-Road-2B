@@ -5,29 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Across the Silk Road - Level 1</title>
     <style>
-        :root { --primary: #00732f; --accent: #c0392b; --bg: #fdfdfd; }
-        body { font-family: 'PingFang SC', system-ui, sans-serif; background: var(--bg); margin: 0; padding-bottom: 40px; }
-        header { background: linear-gradient(135deg, var(--primary), #000); color: white; padding: 25px 20px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        :root { --primary: #00732f; --accent: #27ae60; --bg: #fdfdfd; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); margin: 0; padding-bottom: 40px; }
+        header { background: linear-gradient(135deg, var(--primary), #2c3e50); color: white; padding: 25px 20px; text-align: center; }
         .container { padding: 15px; max-width: 600px; margin: 0 auto; }
         .card { background: white; border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #eee; }
         .word-section { display: flex; align-items: flex-start; justify-content: space-between; cursor: pointer; border-bottom: 1px solid #f0f0f0; padding-bottom: 10px; }
         .word-box { flex: 1; }
         .word-zh { font-size: 32px; font-weight: bold; color: #333; margin: 0; }
         .word-py { font-size: 16px; color: var(--accent); margin-top: 5px; }
-        .word-ar { font-size: 20px; color: var(--primary); direction: rtl; margin-top: 5px; font-weight: bold; }
-        .sentence-section { background: #f9f9f9; padding: 15px; border-radius: 12px; margin-top: 15px; cursor: pointer; border: 1px dashed #ccc; }
+        .word-ar { font-size: 20px; color: #27ae60; direction: rtl; margin-top: 5px; font-weight: bold; }
+        .sentence-section { background: #e8f5e9; padding: 15px; border-radius: 12px; margin-top: 15px; cursor: pointer; border: 1px dashed var(--primary); }
         .s-label { font-size: 11px; color: #999; font-weight: bold; margin-bottom: 5px; display: block; }
-        .s-py { display: block; font-size: 14px; color: #666; margin-bottom: 4px; font-family: "Courier New", monospace; }
+        .s-py { display: block; font-size: 14px; color: #666; margin-bottom: 4px; }
         .s-zh { font-size: 18px; color: #333; line-height: 1.4; display: block; }
         .speaker { font-size: 24px; color: var(--primary); opacity: 0.7; }
     </style>
 </head>
 <body>
+
 <header>
-    <h1 style="margin:0;">Level 1</h1>
+    <h1>Level 1</h1>
     <div style="font-size:14px; opacity:0.8; margin-top:10px;">Across the Silk Road • Term 2</div>
 </header>
+
 <div class="container" id="list"></div>
+
 <script>
     const level1Data = [
         {c:"一", p:"yī", a:"واحد", s:"我妹妹一岁。", sp:"Wǒ mèimei yī suì."},
@@ -45,22 +48,22 @@
         {c:"我", p:"wǒ", a:"أنا", s:"我十二岁。", sp:"Wǒ shí'èr suì."},
         {c:"你", p:"nǐ", a:"أنت", s:"你多大？", sp:"Nǐ duō dà?"},
         {c:"我们", p:"wǒmen", a:"نحن", s:"我们都十二岁。", sp:"Wǒmen dōu shí'èr suì."},
-        {c:"多大", p:"duō dà", a:"كم عمرك", s:"你多大？", sp:"Nǐ duō dà?"},
-        {c:"岁", p:"suì", a:"عمر / سنة", s:"我十二岁。", sp:"Wǒ shí'èr suì."},
-        {c:"吗", p:"ma", a:"هل (للسؤال)", s:"你是莉莉吗？", sp:"Nǐ shì Lìli ma?"},
+        {c:"多大", p:"duō dà", a:"كم العمر", s:"你多大？", sp:"Nǐ duō dà?"},
+        {c:"岁", p:"suì", a:"سنة (للعمر)", s:"我十二岁。", sp:"Wǒ shí'èr suì."},
+        {c:"吗", p:"ma", a:"(أداة استفهام)", s:"你是莉莉吗？", sp:"Nǐ shì Lìlì ma?"},
         {c:"也", p:"yě", a:"أيضاً", s:"我也十二岁。", sp:"Wǒ yě shí'èr suì."},
         {c:"都", p:"dōu", a:"كلاً / جميعاً", s:"我们都十二岁。", sp:"Wǒmen dōu shí'èr suì."},
-        {c:"星期一", p:"xīngqī yī", a:"الأثنين", s:"今天星期一。", sp:"Jīntiān xīngqī yī."},
-        {c:"星期二", p:"xīngqī èr", a:"الثلاثاء", s:"今天星期二。", sp:"Jīntiān xīngqī èr."},
-        {c:"星期三", p:"xīngqī sān", a:"الأربعاء", s:"今天星期三。", sp:"Jīntiān xīngqī sān."},
-        {c:"星期四", p:"xīngqī sì", a:"الخميس", s:"今天星期四。", sp:"Jīntiān xīngqī sì."},
-        {c:"星期五", p:"xīngqī wǔ", a:"الجمعة", s:"今天星期五。", sp:"Jīntiān xīngqī wǔ."},
-        {c:"星期六", p:"xīngqī liù", a:"السبت", s:"今天星期六。", sp:"Jīntiān xīngqī liù."},
-        {c:"星期天", p:"xīngqī tiān", a:"الأحد", s:"今天星期天。", sp:"Jīntiān xīngqī tiān."},
-        {c:"今天", p:"jīntiān", a:"اليوم", s:"今天星期四。", sp:"Jīntiān xīngqī sì."},
-        {c:"明天", p:"míngtiān", a:"غداً", s:"明天星期五。", sp:"Míngtiān xīngqī wǔ."},
-        {c:"上课", p:"shàngkè", a:"حضار الدرس", s:"今天我不上课。", sp:"Jīntiān wǒ bù shàngkè."},
-        {c:"几", p:"jǐ", a:"كم (للسؤال عن العدد)", s:"今天星期几？", sp:"Jīntiān xīngqī jǐ?"},
+        {c:"星期一", p:"xīngqīyī", a:"الإثنين", s:"今天星期一。", sp:"Jīntiān xīngqīyī."},
+        {c:"星期二", p:"xīngqī'èr", a:"الثلاثاء", s:"今天星期二。", sp:"Jīntiān xīngqī'èr."},
+        {c:"星期三", p:"xīngqīsān", a:"الأربعاء", s:"今天星期三。", sp:"Jīntiān xīngqīsān."},
+        {c:"星期四", p:"xīngqīsì", a:"الخميس", s:"今天星期四。", sp:"Jīntiān xīngqīsì."},
+        {c:"星期五", p:"xīngqīwǔ", a:"الجمعة", s:"今天星期五。", sp:"Jīntiān xīngqīwǔ."},
+        {c:"星期六", p:"xīngqīliù", a:"السبت", s:"今天星期六。", sp:"Jīntiān xīngqīliù."},
+        {c:"星期天", p:"xīngqītiān", a:"الأحد", s:"今天星期天。", sp:"Jīntiān xīngqītiān."},
+        {c:"今天", p:"jīntiān", a:"اليوم", s:"今天星期四。", sp:"Jīntiān xīngqīsì."},
+        {c:"明天", p:"míngtiān", a:"غداً", s:"明天星期五。", sp:"Míngtiān xīngqīwǔ."},
+        {c:"上课", p:"shàngkè", a:"حضور الفصل", s:"今天我不上课。", sp:"Jīntiān wǒ bù shàngkè."},
+        {c:"几", p:"jǐ", a:"كم / أي", s:"今天星期几？", sp:"Jīntiān xīngqī jǐ?"},
         {c:"阿联酋", p:"Āliánqiú", a:"الإمارات", s:"这是阿联酋。", sp:"Zhè shì Āliánqiú."},
         {c:"中国", p:"Zhōngguó", a:"الصين", s:"这是中国。", sp:"Zhè shì Zhōngguó."},
         {c:"英国", p:"Yīngguó", a:"بريطانيا", s:"这是英国。", sp:"Zhè shì Yīngguó."},
@@ -68,10 +71,11 @@
         {c:"约旦", p:"Yuēdàn", a:"الأردن", s:"这是约旦。", sp:"Zhè shì Yuēdàn."},
         {c:"埃及", p:"Āijí", a:"مصر", s:"这是埃及。", sp:"Zhè shì Āijí."},
         {c:"国家", p:"guójiā", a:"دولة / بلد", s:"这是什么国家？", sp:"Zhè shì shénme guójiā?"},
-        {c:"看", p:"kàn", a:"انظر", s:"你看！", sp:"Nǐ kàn!"},
+        {c:"看", p:"kàn", a:"انظر / يشاهد", s:"你看！", sp:"Nǐ kàn!"},
         {c:"知道", p:"zhīdào", a:"يعرف", s:"我不知道。", sp:"Wǒ bù zhīdào."},
-        {c:"什么", p:"shénme", a:"ماذا", s:"这是什么国家。", sp:"Zhè shì shénme guójiā."}
+        {c:"什么", p:"shénme", a:"ماذا / ما", s:"这是什么国家？", sp:"Zhè shì shénme guójiā?"}
     ];
+
     const list = document.getElementById('list');
     level1Data.forEach(item => {
         list.innerHTML += `
@@ -88,17 +92,34 @@
                 <span class="s-label">EXAMPLE SENTENCE / 例句:</span>
                 <span class="s-py">${item.sp}</span>
                 <span class="s-zh">${item.s}</span>
-                <div style="text-align:right; margin-top:5px;"><span class="speaker" style="font-size:18px;">🔊</span></div>
+                <div style="text-align:right;"><span class="speaker" style="font-size:18px;">🔊</span></div>
             </div>
         </div>`;
     });
+
     function speak(text, rate) {
         window.speechSynthesis.cancel();
         const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
+        let voices = window.speechSynthesis.getVoices();
+        
+        // 优先尝试寻找高保真在线嗓音 (如微软 Xiaoxiao)
+        let premiumVoice = voices.find(v => 
+            (v.name.includes('Xiaoxiao') || v.name.includes('Online') || v.name.includes('Google 普通话')) && 
+            v.lang.includes('zh')
+        );
+
+        if (premiumVoice) {
+            msg.voice = premiumVoice;
+        } else {
+            msg.lang = 'zh-CN';
+        }
+
         msg.rate = rate;
         window.speechSynthesis.speak(msg);
     }
+    // 初始化语音包
+    window.speechSynthesis.getVoices();
 </script>
+
 </body>
 </html>
