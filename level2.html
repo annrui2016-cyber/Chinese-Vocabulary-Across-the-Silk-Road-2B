@@ -42,7 +42,7 @@
         {c:"学生", p:"xuésheng", a:"طالب", s:"我是学生。", sp:"Wǒ shì xuésheng."},
         {c:"医生", p:"yīshēng", a:"طبيب", s:"我爸爸是医生。", sp:"Wǒ bàba shì yīshēng."},
         {c:"警察", p:"jǐngchá", a:"شرطي", s:"我爸爸是警察。", sp:"Wǒ bàba shì jǐngchá."},
-        {c:"消防员", p:"xiāofángyuán", a:"إطفائي", s:"我爸爸是消防员。", sp:"Wǒ bàba shì xiāofángyuán."},
+        {c:"消防员", p:"xiāofángyuán", a:"إطفائي", s:"我爸爸是消防员。", sp:"Wǒ bàba shì xiāofángyuان."},
         {c:"宇航员", p:"yǔhángyuán", a:"رائد فضاء", s:"我想当宇航员。", sp:"Wǒ xiǎng dāng yǔhángyuán."},
         {c:"做", p:"zuò", a:"يفعل / يعمل", s:"你爸爸做什么工作？", sp:"Nǐ bàba zuò shénme gōngzuò?"},
         {c:"工作", p:"gōngzuò", a:"عمل / وظيفة", s:"你妈妈做什么工作？", sp:"Nǐ māma zuò shénme gōngzuò?"},
@@ -90,19 +90,20 @@
         
         let processedText = text;
         let adjustedRate = rate;
-        let adjustedPitch = 1.0;
 
-        // 单字增强逻辑：增加标点符号强制延展音程，略微调低音调和语速
-        if (text.length === 1) {
-            processedText = text + "。"; 
-            adjustedRate = rate * 0.75;  
-            adjustedPitch = 0.95;       
+        // 【修正核心】针对容易读错声调的单字进行处理
+        if (text === "几") {
+            // 通过增加一个微小的语气词或者标点，强制 AI 识别为询问/三声
+            processedText = "几？"; 
+            adjustedRate = rate * 0.7; // 进一步放慢，确保三声完整
+        } else if (text.length === 1) {
+            processedText = text + "。";
+            adjustedRate = rate * 0.75;
         }
 
         const msg = new SpeechSynthesisUtterance(processedText);
         let voices = window.speechSynthesis.getVoices();
         
-        // 优先寻找微软晓晓或其他高音质在线语音
         let premiumVoice = voices.find(v => 
             (v.name.includes('Xiaoxiao') || v.name.includes('Online') || v.name.includes('Google 普通话')) && 
             v.lang.includes('zh')
@@ -115,11 +116,10 @@
         }
 
         msg.rate = adjustedRate;
-        msg.pitch = adjustedPitch;
+        msg.pitch = 1.0; 
         window.speechSynthesis.speak(msg);
     }
 
-    // 初始化语音接口
     window.speechSynthesis.getVoices();
 </script>
 
