@@ -98,21 +98,29 @@
         let processedText = text;
         let adjustedRate = rate;
 
-        // --- 核心修正逻辑 ---
+        // --- 终极修正方案 ---
 
-        // 1. 修正“还”的多音字问题 (hái vs huán)
-        if (text.includes("还")) {
-            // 通过词组诱导 AI 读成 hái
-            processedText = text.replace("还", "还hái"); 
+        // 1. 修正“还 (hái)”读音：通过后台替换为同音无歧义汉字“孩”，彻底解决拼读和多音字问题
+        if (text === "还") {
+            processedText = "孩"; 
+            adjustedRate = rate * 0.75;
+        } else {
+            processedText = text.replace(/还/g, "孩"); 
         }
 
-        // 2. 修正单字发音
+        // 2. 修正轻声：将“子”替换为“口语中的轻声感”，或者在子后加极轻停顿
+        // 针对“饺子、筷子、本子”等词，通过后面加一个语气词引导 AI 收尾
+        if (processedText.includes("子")) {
+            processedText = processedText.replace(/子/g, "子 ");
+        }
+
+        // 3. 针对“几”的修正
         if (text === "几") {
             processedText = "几？"; 
-            adjustedRate = rate * 0.7;
-        } else if (text.length === 1) {
-            processedText = text + "——"; // 使用延展号保持音高
             adjustedRate = rate * 0.75;
+        } else if (text.length === 1 && text !== "还") {
+            processedText = text + "。"; 
+            adjustedRate = rate * 0.8;
         }
 
         const msg = new SpeechSynthesisUtterance(processedText);
