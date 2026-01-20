@@ -90,18 +90,27 @@
         </div>`;
     });
 
-    function speak(text, rate) {
+   function speak(text, rate) {
         window.speechSynthesis.cancel();
         
         let processedText = text;
         let adjustedRate = rate;
 
-        // 针对单字及容易读错声调的字进行修正
+        // --- 核心修正逻辑 ---
+        
+        // 1. 修正“冲沙”中“沙”的声调。
+        // 技巧：在“沙”后面紧跟一个“发”或“天”（均为一声），再把多余的字去掉，
+        // 或者直接给“沙”后面加一个长停顿，强制 AI 回归标准字典音（一声）。
+        if (text.includes("冲沙")) {
+            processedText = text.replace("冲沙", "冲沙——"); // 增加延展号强制平调
+        }
+
+        // 2. 针对单字及容易读错声调的字进行修正
         if (text === "几") {
             processedText = "几？"; 
             adjustedRate = rate * 0.7;
         } else if (text === "了") {
-            processedText = "了。"; // 确保轻声读得清楚
+            processedText = "了。"; 
             adjustedRate = rate * 0.75;
         } else if (text.length === 1) {
             processedText = text + "。";
