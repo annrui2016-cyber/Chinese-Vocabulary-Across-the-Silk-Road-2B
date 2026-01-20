@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Across the Silk Road - Level 4</title>
     <style>
-        :root { --primary: #8e44ad; --accent: #9b59b6; --bg: #fdfdfd; }
+        :root { --primary: #e67e22; --accent: #f39c12; --bg: #fdfdfd; }
         body { font-family: system-ui, sans-serif; background: var(--bg); margin: 0; padding-bottom: 40px; }
         header { background: linear-gradient(135deg, var(--primary), #2c3e50); color: white; padding: 25px 20px; text-align: center; }
         .container { padding: 15px; max-width: 600px; margin: 0 auto; }
@@ -15,7 +15,7 @@
         .word-zh { font-size: 32px; font-weight: bold; color: #333; margin: 0; }
         .word-py { font-size: 16px; color: var(--accent); margin-top: 5px; }
         .word-ar { font-size: 20px; color: #27ae60; direction: rtl; margin-top: 5px; font-weight: bold; }
-        .sentence-section { background: #f5eef8; padding: 15px; border-radius: 12px; margin-top: 15px; cursor: pointer; border: 1px dashed #8e44ad; }
+        .sentence-section { background: #fef5e7; padding: 15px; border-radius: 12px; margin-top: 15px; cursor: pointer; border: 1px dashed var(--primary); }
         .s-label { font-size: 11px; color: #999; font-weight: bold; margin-bottom: 5px; display: block; }
         .s-py { display: block; font-size: 14px; color: #666; margin-bottom: 4px; }
         .s-zh { font-size: 18px; color: #333; line-height: 1.4; display: block; }
@@ -23,34 +23,38 @@
     </style>
 </head>
 <body>
+
 <header>
-    <h1 style="margin:0;">Level 4</h1>
+    <h1>Level 4</h1>
     <div style="font-size:14px; opacity:0.8; margin-top:10px;">Across the Silk Road • Term 2</div>
 </header>
+
 <div class="container" id="list"></div>
+
 <script>
     const level4Data = [
         {c:"医院", p:"yīyuàn", a:"مستشفى", s:"妈妈在医院工作。", sp:"Māma zài yīyuàn gōngzuò."},
         {c:"公司", p:"gōngsī", a:"شركة", s:"爸爸在公司工作。", sp:"Bàba zài gōngsī gōngzuò."},
         {c:"学校", p:"xuéxiào", a:"مدرسة", s:"我在学校学习中文。", sp:"Wǒ zài xuéxiào xuéxí Zhōngwén."},
-        {c:"食堂", p:"shítáng", a:"مقصف / كافتيريا", s:"我在食堂吃饭。", sp:"Wǒ zài shítáng chīfàn."},
+        {c:"食堂", p:"shítáng", a:"مقصف / كافيتيريا", s:"我在食堂吃饭。", sp:"Wǒ zài shítáng chīfàn."},
         {c:"饭店", p:"fàndiàn", a:"مطعم", s:"我们在饭店吃饭。", sp:"Wǒmen zài fàndiàn chīfàn."},
         {c:"教室", p:"jiàoshì", a:"فصل دراسي", s:"我在教室写作业。", sp:"Wǒ zài jiàoshì xiě zuòyè."},
-        {c:"网课", p:"wǎngkè", a:"درس عبر الإنترنت", s:"我在家上书法网课。", sp:"Wǒ zài jiā shàng shūfǎ wǎngkè."},
+        {c:"网课", p:"wǎngkè", a:"حصص عبر الإنترنت", s:"我在家上书法网课。", sp:"Wǒ zài jiā shàng shūfǎ wǎngkè."},
         {c:"问", p:"wèn", a:"يسأل", s:"这个问题我不知道，要不你问问阿里？", sp:"Zhège wèntí wǒ bù zhīdào, yàobù nǐ wènwen Ālǐ?"},
         {c:"售货员", p:"shòuhuòyuán", a:"بائع", s:"我妈妈是售货员，她在商店工作。", sp:"Wǒ māma shì shòuhuòyuán, tā zài shāngdiàn gōngzuò."},
         {c:"厨师", p:"chúshī", a:"طباخ", s:"我妈妈是厨师，她在饭店工作。", sp:"Wǒ māma shì chúshī, tā zài fàndiàn gōngzuò."},
         {c:"老师", p:"lǎoshī", a:"معلم", s:"我妈妈是老师，她在学校工作。", sp:"Wǒ māma shì lǎoshī, tā zài xuéxiào gōngzuò."},
+        {c:"医生", p:"yīshēng", a:"طبيب", s:"我妈妈是医生，她在医院工作。", sp:"Wǒ māma shì yīshēng, tā zài yīyuàn gōngzuò."},
         {c:"时间", p:"shíjiān", a:"وقت", s:"我很忙，没有时间。", sp:"Wǒ hěn máng, méiyǒu shíjiān."},
         {c:"请", p:"qǐng", a:"من فضلك / تفضل", s:"请进！", sp:"Qǐng jìn!"},
         {c:"坐", p:"zuò", a:"يجلس", s:"请坐！", sp:"Qǐng zuò!"},
-        {c:"饺子", p:"jiǎozi", a:"جيوزي (زلابية صينية)", s:"我喜欢吃饺子。", sp:"Wǒ xǐhuan chī jiǎozi."},
+        {c:"饺子", p:"jiǎozi", a:"زلابية (جياوزي)", s:"我喜欢吃饺子。", sp:"Wǒ xǐhuan chī jiǎozi."},
         {c:"汤", p:"tāng", a:"حساء", s:"这是鸡蛋汤。", sp:"Zhè shì jīdàntāng."},
         {c:"服务员", p:"fúwùyuán", a:"نادل", s:"这个饭店的服务员很好。", sp:"Zhège fàndiàn de fúwùyuán hěn hǎo."},
         {c:"菜单", p:"càidān", a:"قائمة الطعام", s:"这是菜单。", sp:"Zhè shì càidān."},
         {c:"请问", p:"qǐngwèn", a:"لو سمحت (للسؤال)", s:"请问有饺子吗？", sp:"Qǐngwèn yǒu jiǎozi ma?"},
         {c:"要", p:"yào", a:"يريد", s:"我要五个包子。", sp:"Wǒ yào wǔ gè bāozi."},
-        {c:"碗", p:"wǎn", a:"وعاء / زبدية", s:"我要一碗米饭。", sp:"Wǒ yào yī wǎn mǐfàn."},
+        {c:"碗", p:"wǎn", a:"وعاء / سلطانية", s:"我要一碗米饭。", sp:"Wǒ yào yī wǎn mǐfàn."},
         {c:"这儿", p:"zhèr", a:"هنا", s:"菜单在这儿。", sp:"Càidān zài zhèr."},
         {c:"盘", p:"pán", a:"طبق / صحن", s:"我要一盘饺子。", sp:"Wǒ yào yī pán jiǎozi."},
         {c:"手机", p:"shǒujī", a:"هاتف محمول", s:"我买了一部手机。", sp:"Wǒ mǎile yī bù shǒujī."},
@@ -62,10 +66,11 @@
         {c:"支", p:"zhī", a:"(أداة قياس للأقلام)", s:"我买了两支笔。", sp:"Wǒ mǎile liǎng zhī bǐ."},
         {c:"部", p:"bù", a:"(أداة قياس للهواتف)", s:"我买了一部手机。", sp:"Wǒ mǎile yī bù shǒujī."},
         {c:"还", p:"hái", a:"أيضاً / بالإضافة إلى", s:"我还买了几本书。", sp:"Wǒ hái mǎile jǐ běn shū."},
-        {c:"瓶", p:"píng", a:"زجاجة", s:"一瓶水。", sp:"Yī píng shuǐ."},
-        {c:"杯", p:"bēi", a:"كوب", s:"一杯果汁。", sp:"Yī bēi guǒzhī."},
-        {c:"双", p:"shuāng", a:"زوج (من)", s:"一双筷子。", sp:"Yī shuāng kuàizi."}
+        {c:"瓶", p:"píng", a:"زجاجة", s:"我要一瓶水。", sp:"Wǒ yào yī píng shuǐ."},
+        {c:"杯", p:"bēi", a:"كوب", s:"我要一杯果汁。", sp:"Wǒ yào yī bēi guǒzhī."},
+        {c:"双", p:"shuāng", a:"زوج (من)", s:"我要一双筷子。", sp:"Wǒ yào yī shuāng kuàizi."}
     ];
+
     const list = document.getElementById('list');
     level4Data.forEach(item => {
         list.innerHTML += `
@@ -82,17 +87,55 @@
                 <span class="s-label">EXAMPLE SENTENCE / 例句:</span>
                 <span class="s-py">${item.sp}</span>
                 <span class="s-zh">${item.s}</span>
-                <div style="text-align:right; margin-top:5px;"><span class="speaker" style="font-size:18px;">🔊</span></div>
+                <div style="text-align:right;"><span class="speaker" style="font-size:18px;">🔊</span></div>
             </div>
         </div>`;
     });
+
     function speak(text, rate) {
         window.speechSynthesis.cancel();
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        msg.rate = rate;
+        
+        let processedText = text;
+        let adjustedRate = rate;
+
+        // --- 核心修正逻辑 ---
+
+        // 1. 修正“还”的多音字问题 (hái vs huán)
+        if (text.includes("还")) {
+            // 通过词组诱导 AI 读成 hái
+            processedText = text.replace("还", "还hái"); 
+        }
+
+        // 2. 修正单字发音
+        if (text === "几") {
+            processedText = "几？"; 
+            adjustedRate = rate * 0.7;
+        } else if (text.length === 1) {
+            processedText = text + "——"; // 使用延展号保持音高
+            adjustedRate = rate * 0.75;
+        }
+
+        const msg = new SpeechSynthesisUtterance(processedText);
+        let voices = window.speechSynthesis.getVoices();
+        
+        let premiumVoice = voices.find(v => 
+            (v.name.includes('Xiaoxiao') || v.name.includes('Online') || v.name.includes('Google 普通话')) && 
+            v.lang.includes('zh')
+        );
+
+        if (premiumVoice) {
+            msg.voice = premiumVoice;
+        } else {
+            msg.lang = 'zh-CN';
+        }
+
+        msg.rate = adjustedRate;
+        msg.pitch = 1.0; 
         window.speechSynthesis.speak(msg);
     }
+
+    window.speechSynthesis.getVoices();
 </script>
+
 </body>
 </html>
