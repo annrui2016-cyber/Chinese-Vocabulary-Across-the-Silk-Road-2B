@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Across the Silk Road - Level 3</title>
     <style>
-        :root { --primary: #2980b9; --accent: #3498db; --bg: #fdfdfd; }
+        :root { --primary: #8e44ad; --accent: #9b59b6; --bg: #fdfdfd; }
         body { font-family: system-ui, sans-serif; background: var(--bg); margin: 0; padding-bottom: 40px; }
         header { background: linear-gradient(135deg, var(--primary), #2c3e50); color: white; padding: 25px 20px; text-align: center; }
         .container { padding: 15px; max-width: 600px; margin: 0 auto; }
@@ -15,7 +15,7 @@
         .word-zh { font-size: 32px; font-weight: bold; color: #333; margin: 0; }
         .word-py { font-size: 16px; color: var(--accent); margin-top: 5px; }
         .word-ar { font-size: 20px; color: #27ae60; direction: rtl; margin-top: 5px; font-weight: bold; }
-        .sentence-section { background: #f0f7ff; padding: 15px; border-radius: 12px; margin-top: 15px; cursor: pointer; border: 1px dashed #3498db; }
+        .sentence-section { background: #f4ecf7; padding: 15px; border-radius: 12px; margin-top: 15px; cursor: pointer; border: 1px dashed var(--primary); }
         .s-label { font-size: 11px; color: #999; font-weight: bold; margin-bottom: 5px; display: block; }
         .s-py { display: block; font-size: 14px; color: #666; margin-bottom: 4px; }
         .s-zh { font-size: 18px; color: #333; line-height: 1.4; display: block; }
@@ -23,21 +23,24 @@
     </style>
 </head>
 <body>
+
 <header>
-    <h1 style="margin:0;">Level 3</h1>
+    <h1>Level 3</h1>
     <div style="font-size:14px; opacity:0.8; margin-top:10px;">Across the Silk Road • Term 2</div>
 </header>
+
 <div class="container" id="list"></div>
+
 <script>
     const level3Data = [
-        {c:"喜欢", p:"xǐhuan", a:"يحب", s:"我喜欢白色。", sp:"Wǒ xǐhuan báisè."},
+        {c:"喜欢", p:"xǐhuan", a:"يحب / يعجبه", s:"我喜欢白色。", sp:"Wǒ xǐhuan báisè."},
         {c:"颜色", p:"yánsè", a:"لون", s:"你喜欢什么颜色？", sp:"Nǐ xǐhuan shénme yánsè?"},
         {c:"红色", p:"hóngsè", a:"أحمر", s:"我喜欢红色。", sp:"Wǒ xǐhuan hóngsè."},
         {c:"黄色", p:"huángsè", a:"أصفر", s:"我喜欢黄色。", sp:"Wǒ xǐhuan huángsè."},
         {c:"绿色", p:"lǜsè", a:"أخضر", s:"我喜欢绿色。", sp:"Wǒ xǐhuan lǜsè."},
         {c:"白色", p:"báisè", a:"أبيض", s:"我喜欢白色。", sp:"Wǒ xǐhuan báisè."},
         {c:"黑色", p:"hēisè", a:"أسود", s:"我喜欢黑色。", sp:"Wǒ xǐhuan hēisè."},
-        {c:"紫色", p:"zǐsè", a:"بنفسجي", s:"我喜欢紫色。", sp:"Wǒ xǐhuan zǐsè."},
+        {c:"紫色", p:"zǐsè", a:"أرجواني", s:"我喜欢紫色。", sp:"Wǒ xǐhuan zǐsè."},
         {c:"花", p:"huā", a:"زهرة", s:"我喜欢红色的花。", sp:"Wǒ xǐhuan hóngsè de huā."},
         {c:"各种", p:"gèzhǒng", a:"مختلف / متنوع", s:"花园里有各种颜色的花。", sp:"Huāyuán lǐ yǒu gèzhǒng yánsè de huā."},
         {c:"漂亮", p:"piàoliang", a:"جميل", s:"紫色的花太漂亮了！", sp:"Zǐsè de huā tài piàoliang le!"},
@@ -45,26 +48,27 @@
         {c:"周末", p:"zhōumò", a:"عطلة نهاية الأسبوع", s:"周末你去哪儿了？", sp:"Zhōumò nǐ qù nǎr le?"},
         {c:"去", p:"qù", a:"يذهب", s:"我去奇迹花园了。", sp:"Wǒ qù Qíjì Huāyuán le."},
         {c:"哪儿", p:"nǎr", a:"أين", s:"你去哪儿？", sp:"Nǐ qù nǎr?"},
-        {c:"了", p:"le", a:"(أداة للماضي)", s:"我周末去图书馆了。", sp:"Wǒ zhōumò qù túshūguǎn le."},
+        {c:"了", p:"le", a:"(أداة تدل على وقوع الفعل)", s:"我周末去图书馆了。", sp:"Wǒ zhōumò qù túshūguǎn le."},
         {c:"电影院", p:"diànyǐngyuàn", a:"سينما", s:"我周末去电影院了。", sp:"Wǒ zhōumò qù diànyǐngyuàn le."},
-        {c:"商店", p:"shāngdiàn", a:"محل / متجر", s:"我妈妈去商店了。", sp:"Wǒ māma qù shāngdiàn le."},
+        {c:"商店", p:"shāngdiàn", a:"متجر", s:"我妈妈去商店了。", sp:"Wǒ māma qù shāngdiàn le."},
         {c:"图书馆", p:"túshūguǎn", a:"مكتبة", s:"这是图书馆。", sp:"Zhè shì túshūguǎn."},
         {c:"清真寺", p:"qīngzhēnsì", a:"مسجد", s:"爸爸去清真寺了。", sp:"Bàba qù qīngzhēnsì le."},
-        {c:"奇迹花园", p:"Qíjì Huāyuán", a:"حديقة المعجزة", s:"你知道奇迹花园吗？", sp:"Nǐ zhīdào Qíjì Huāyuán ma?"},
-        {c:"怎么样", p:"zěnmeyàng", a:"كيف", s:"奇迹花园怎么样？", sp:"Qíjì Huāyuán zěnmeyàng?"},
+        {c:"奇迹花园", p:"Qíjì Huāyuán", a:"حديقة المعجزات", s:"你知道奇迹花园吗？", sp:"Nǐ zhīdào Qíjì Huāyuán ma?"},
+        {c:"怎么样", p:"zěnmeyàng", a:"كيف حال / كيف يبدو", s:"奇迹花园怎么样？", sp:"Qíjì Huāyuán zěnmeyàng?"},
         {c:"运动", p:"yùndòng", a:"رياضة", s:"我喜欢运动。", sp:"Wǒ xǐhuan yùndòng."},
         {c:"打篮球", p:"dǎ lánqiú", a:"لعب كرة السلة", s:"我很喜欢打篮球。", sp:"Wǒ hěn xǐhuan dǎ lánqiú."},
         {c:"海边", p:"hǎibiān", a:"شاطئ البحر", s:"我周末常常去海边。", sp:"Wǒ zhōumò chángcháng qù hǎibiān."},
         {c:"沙漠", p:"shāmò", a:"صحراء", s:"我很喜欢沙漠。", sp:"Wǒ hěn xǐhuan shāmò."},
-        {c:"公园", p:"gōngyuán", a:"حديقة عامة", s:"我周末去公园玩儿了。", sp:"Wǒ zhōumò qù gōngyuán wánr le."},
-        {c:"冲沙", p:"chōngshā", a:"تطعيس (قيادة في الصحراء)", s:"我去沙漠冲沙了。", sp:"Wǒ qù shāmò chōngshā le."},
-        {c:"做礼拜", p:"zuò lǐbài", a:"يصلي", s:"我去清真寺做礼拜了。", sp:"Wǒ qù qīngzhēnsì zuò lǐbài le."},
+        {c:"公园", p:"gōngyuán", a:"منتزه / حديقة", s:"我周末去公园玩儿了。", sp:"Wǒ zhōumò qù gōngyuán wánr le."},
+        {c:"冲沙", p:"chōngshā", a:"رحلات السفاري (القيادة في الرمل)", s:"我去沙漠冲沙了。", sp:"Wǒ qù shāmò chōngshā le."},
+        {c:"做礼拜", p:"zuò lǐbài", a:"يؤدي الصلاة", s:"我去清真寺做礼拜了。", sp:"Wǒ qù qīngzhēnsì zuò lǐbài le."},
         {c:"买东西", p:"mǎi dōngxi", a:"تسوق", s:"我去商店买东西了。", sp:"Wǒ qù shāngdiàn mǎi dōngxi le."},
-        {c:"书法", p:"shūfǎ", a:"خط (فني)", s:"我爸爸常常去公园写书法。", sp:"Wǒ bàba chángcháng qù gōngyuán xiě shūfǎ."},
-        {c:"好玩儿", p:"hǎowánr", a:"ممتع", s:"这个公园太好玩了！", sp:"Zhège gōngyuán tài hǎowán le!"},
+        {c:"书法", p:"shūfǎ", a:"الخط العربي / الصيني", s:"我爸爸常常去公园写书法。", sp:"Wǒ bàba chángcháng qù gōngyuán xiě shūfǎ."},
+        {c:"好玩儿", p:"hǎowánr", a:"ممتع", s:"这个公园太好玩了！", sp:"Zhège gōngyuán tài hǎowánr le!"},
         {c:"跳舞", p:"tiàowǔ", a:"رقص", s:"我妈妈喜欢跳舞。", sp:"Wǒ māma xǐhuan tiàowǔ."},
         {c:"朋友", p:"péngyou", a:"صديق", s:"我有一个中国朋友。", sp:"Wǒ yǒu yī gè Zhōngguó péngyou."}
     ];
+
     const list = document.getElementById('list');
     level3Data.forEach(item => {
         list.innerHTML += `
@@ -81,17 +85,50 @@
                 <span class="s-label">EXAMPLE SENTENCE / 例句:</span>
                 <span class="s-py">${item.sp}</span>
                 <span class="s-zh">${item.s}</span>
-                <div style="text-align:right; margin-top:5px;"><span class="speaker" style="font-size:18px;">🔊</span></div>
+                <div style="text-align:right;"><span class="speaker" style="font-size:18px;">🔊</span></div>
             </div>
         </div>`;
     });
+
     function speak(text, rate) {
         window.speechSynthesis.cancel();
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        msg.rate = rate;
+        
+        let processedText = text;
+        let adjustedRate = rate;
+
+        // 针对单字及容易读错声调的字进行修正
+        if (text === "几") {
+            processedText = "几？"; 
+            adjustedRate = rate * 0.7;
+        } else if (text === "了") {
+            processedText = "了。"; // 确保轻声读得清楚
+            adjustedRate = rate * 0.75;
+        } else if (text.length === 1) {
+            processedText = text + "。";
+            adjustedRate = rate * 0.75;
+        }
+
+        const msg = new SpeechSynthesisUtterance(processedText);
+        let voices = window.speechSynthesis.getVoices();
+        
+        let premiumVoice = voices.find(v => 
+            (v.name.includes('Xiaoxiao') || v.name.includes('Online') || v.name.includes('Google 普通话')) && 
+            v.lang.includes('zh')
+        );
+
+        if (premiumVoice) {
+            msg.voice = premiumVoice;
+        } else {
+            msg.lang = 'zh-CN';
+        }
+
+        msg.rate = adjustedRate;
+        msg.pitch = 1.0; 
         window.speechSynthesis.speak(msg);
     }
+
+    window.speechSynthesis.getVoices();
 </script>
+
 </body>
 </html>
