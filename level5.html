@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Across the Silk Road - Level 5</title>
     <style>
-        :root { --primary: #e67e22; --accent: #d35400; --bg: #fdfdfd; }
+        :root { --primary: #c0392b; --accent: #e74c3c; --bg: #fdfdfd; }
         body { font-family: system-ui, sans-serif; background: var(--bg); margin: 0; padding-bottom: 40px; }
         header { background: linear-gradient(135deg, var(--primary), #2c3e50); color: white; padding: 25px 20px; text-align: center; }
         .container { padding: 15px; max-width: 600px; margin: 0 auto; }
@@ -15,7 +15,7 @@
         .word-zh { font-size: 32px; font-weight: bold; color: #333; margin: 0; }
         .word-py { font-size: 16px; color: var(--accent); margin-top: 5px; }
         .word-ar { font-size: 20px; color: #27ae60; direction: rtl; margin-top: 5px; font-weight: bold; }
-        .sentence-section { background: #fff5e6; padding: 15px; border-radius: 12px; margin-top: 15px; cursor: pointer; border: 1px dashed var(--primary); }
+        .sentence-section { background: #fdf2f2; padding: 15px; border-radius: 12px; margin-top: 15px; cursor: pointer; border: 1px dashed var(--primary); }
         .s-label { font-size: 11px; color: #999; font-weight: bold; margin-bottom: 5px; display: block; }
         .s-py { display: block; font-size: 14px; color: #666; margin-bottom: 4px; }
         .s-zh { font-size: 18px; color: #333; line-height: 1.4; display: block; }
@@ -23,28 +23,34 @@
     </style>
 </head>
 <body>
-<header><h1>Level 5</h1><div style="font-size:14px; opacity:0.8;">Across the Silk Road • Term 2</div></header>
+
+<header>
+    <h1>Level 5</h1>
+    <div style="font-size:14px; opacity:0.8; margin-top:10px;">Across the Silk Road • Term 2</div>
+</header>
+
 <div class="container" id="list"></div>
+
 <script>
     const level5Data = [
         {c:"动物", p:"dòngwù", a:"حيوان", s:"你喜欢什么动物？", sp:"Nǐ xǐhuan shénme dòngwù?"},
-        {c:"动物园", p:"dòngwùyuán", a:"حديقة حيوان", s:"动物园里有什么？", sp:"Dòngwùyuán lǐ yǒu shénme?"},
+        {c:"动物园", p:"dòngwùyuán", a:"حديقة الحيوان", s:"动物园里有什么？", sp:"Dòngwùyuán lǐ yǒu shénme?"},
         {c:"熊猫", p:"xióngmāo", a:"باندا", s:"动物园里有两只熊猫。", sp:"Dòngwùyuán lǐ yǒu liǎng zhī xióngmāo."},
         {c:"猫", p:"māo", a:"قطة", s:"我有一只猫。", sp:"Wǒ yǒu yī zhī māo."},
         {c:"熊", p:"xióng", a:"دب", s:"那是一只熊。", sp:"Nà shì yī zhī xióng."},
         {c:"狗", p:"gǒu", a:"كلب", s:"我有一只狗。", sp:"Wǒ yǒu yī zhī gǒu."},
         {c:"豹子", p:"bàozi", a:"فهد", s:"那是一只豹子。", sp:"Nà shì yī zhī bàozi."},
-        {c:"鹰", p:"yīng", a:"صقر / نسر", s:"那里一只鹰。", sp:"Nàlǐ yī zhī yīng."},
+        {c:"鹰", p:"yīng", a:"صقر", s:"那里有一只鹰。", sp:"Nàli yǒu yī zhī yīng."},
         {c:"狼", p:"láng", a:"ذئب", s:"那是一只狼。", sp:"Nà shì yī zhī láng."},
         {c:"老虎", p:"lǎohǔ", a:"نمر", s:"那是一只老虎。", sp:"Nà shì yī zhī lǎohǔ."},
         {c:"狮子", p:"shīzi", a:"أسد", s:"那是一只狮子。", sp:"Nà shì yī zhī shīzi."},
         {c:"照片", p:"zhàopiàn", a:"صورة", s:"我手机里有很多熊猫的照片。", sp:"Wǒ shǒujī lǐ yǒu hěnduō xióngmāo de zhàopiàn."},
-        {c:"好玩儿", p:"hǎowánr", a:"ممتع", s:"迪拜动物园好玩儿吗？", sp:"Díbài dòngwùyuán hǎowánr ma?"},
-        {c:"非常", p:"fēicháng", a:"جداً", s:"迪拜动物园非常好玩儿。", sp:"Díbài dòngwùyuán fēicháng hǎowánr."},
-        {c:"上（面）", p:"shàng (mian)", a:"فوق / على", s:"树上有一只熊猫。", sp:"Shù shàng yǒu yī zhī xióngmāo."},
-        {c:"下（面）", p:"xià (mian)", a:"تحت", s:"树下有一只熊猫。", sp:"Shù xià yǒu yī zhī xióngmāo."},
-        {c:"可爱", p:"kě'ài", a:"لطيف", s:"熊猫太可爱了！", sp:"Xióngmāo tài kě'ài le!"},
-        {c:"有意思", p:"yǒuyìsi", a:"ممتع / ذو معنى", s:"这个故事真有意思。", sp:"Zhège gùshi zhēn yǒuyìsi."},
+        {c:"好玩儿", p:"hǎowánr", a:"ممتع", s:"迪拜动物园好玩儿吗？", sp:"Díbài Dòngwùyuán hǎowánr ma?"},
+        {c:"非常", p:"fēicháng", a:"جداً / للغاية", s:"迪拜动物园非常好玩儿。", sp:"Díbài Dòngwùyuán fēicháng hǎowánr."},
+        {c:"上", p:"shàng (miàn)", a:"فوق / على", s:"树上有一只熊猫。", sp:"Shù shàng yǒu yī zhī xióngmāo."},
+        {c:"下", p:"xià (miàn)", a:"تحت", s:"树下有一只熊猫。", sp:"Shù xià yǒu yī zhī xióngmāo."},
+        {c:"可爱", p:"kě'ài", a:"لطيف / جميل", s:"熊猫太可爱了！", sp:"Xióngmāo tài kě'ài le!"},
+        {c:"有意思", p:"yǒu yìsi", a:"ممتع / مثير للاهتمام", s:"这个故事真有意思。", sp:"Zhège gùshi zhēn yǒu yìsi."},
         {c:"红色", p:"hóngsè", a:"أحمر", s:"兔子的眼睛是红色的。", sp:"Tùzi de yǎnjing shì hóngsè de."},
         {c:"长", p:"cháng", a:"طويل", s:"兔子的耳朵很长。", sp:"Tùzi de ěrduo hěn cháng."},
         {c:"短", p:"duǎn", a:"قصير", s:"兔子的腿很短。", sp:"Tùzi de tuǐ hěn duǎn."},
@@ -59,14 +65,14 @@
         {c:"腿", p:"tuǐ", a:"ساق", s:"兔子的腿很短。", sp:"Tùzi de tuǐ hěn duǎn."},
         {c:"脚", p:"jiǎo", a:"قدم", s:"我的脚很小。", sp:"Wǒ de jiǎo hěn xiǎo."},
         {c:"它", p:"tā", a:"هو/هي (لغير العاقل)", s:"它的嘴很大。", sp:"Tā de zuǐ hěn dà."},
-        {c:"只", p:"zhī", a:"(أداة قياس للحيوانات)", s:"这只熊猫很可爱。", sp:"Zhè zhī xióngmāo hěn kě'ài."},
-        {c:"生病", p:"shēngbìng", a:"مريض", s:"我生病了。", sp:"Wǒ shēngbìng le."},
-        {c:"疼", p:"téng", a:"ألم", s:"我头疼。", sp:"Wǒ tóu téng."},
-        {c:"应该", p:"yīnggāi", a:"يجب", s:"你应该多休息。", sp:"Nǐ yīnggāi duō xiūxi."},
+        {c:"只", p:"zhī", a:"(أداة قياس للحيوانات)", s:"那只熊猫真可爱！", sp:"Nà zhī xióngmāo zhēn kě'ài!"},
+        {c:"生病", p:"shēng bìng", a:"مريض", s:"我生病了。", sp:"Wǒ shēng bìng le."},
+        {c:"疼", p:"téng", a:"ألم / وجع", s:"我头疼。", sp:"Wǒ tóu téng."},
+        {c:"应该", p:"yīnggāi", a:"يجب / ينبغي", s:"你应该多休息。", sp:"Nǐ yīnggāi duō xiūxi."},
         {c:"觉得", p:"juéde", a:"يشعر / يعتقد", s:"我觉得吃水果对身体好。", sp:"Wǒ juéde chī shuǐguǒ duì shēntǐ hǎo."},
-        {c:"对", p:"duì", a:"لـ / تجاه", s:"运动对身体好。", sp:"Yùndòng duì shēntǐ hǎo."},
+        {c:"对", p:"duì", a:"لـ / بالنسبة لـ", s:"运动对身体好。", sp:"Yùndòng duì shēntǐ hǎo."},
         {c:"身体", p:"shēntǐ", a:"جسم / صحة", s:"运动对身体好。", sp:"Yùndòng duì shēntǐ hǎo."},
-        {c:"发烧", p:"fāshāo", a:"حمى", s:"我发烧了。", sp:"Wǒ fāshāo le."},
+        {c:"发烧", p:"fāshāo", a:"حمى / حرارة", s:"我发烧了。", sp:"Wǒ fāshāo le."},
         {c:"药", p:"yào", a:"دواء", s:"你吃药了吗？", sp:"Nǐ chī yào le ma?"},
         {c:"为什么", p:"wèishénme", a:"لماذا", s:"你今天为什么没有来上课？", sp:"Nǐ jīntiān wèishénme méiyǒu lái shàngkè?"}
     ];
@@ -84,7 +90,7 @@
                 <div class="speaker">🔊</div>
             </div>
             <div class="sentence-section" onclick="speak('${item.s}', 0.5)">
-                <span class="s-label">EXAMPLE SENTENCE:</span>
+                <span class="s-label">EXAMPLE SENTENCE / 例句:</span>
                 <span class="s-py">${item.sp}</span>
                 <span class="s-zh">${item.s}</span>
                 <div style="text-align:right;"><span class="speaker" style="font-size:18px;">🔊</span></div>
@@ -94,11 +100,54 @@
 
     function speak(text, rate) {
         window.speechSynthesis.cancel();
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        msg.rate = rate;
+        
+        let processedText = text;
+        let adjustedRate = rate;
+
+        // 1. 修正“长 (cháng)”：在形容身体部位语境下，替换为同音字“常”诱导
+        if (text === "长") {
+            processedText = "常"; 
+            adjustedRate = rate * 0.7;
+        } else {
+            processedText = text.replace(/很长/g, "很常");
+            processedText = processedText.replace(/长头发/g, "常头发");
+        }
+
+        // 2. 修正轻声词：在子/头/朵/膊/睛后面加微小空格
+        const softWords = ["子", "头", "朵", "膊", "睛", "de"];
+        softWords.forEach(suffix => {
+            if (processedText.includes(suffix)) {
+                processedText = processedText.split(suffix).join(suffix + " ");
+            }
+        });
+
+        // 3. 修正单字发音
+        if (text.length === 1 && text !== "长") {
+            processedText = text + "。"; 
+            adjustedRate = rate * 0.8;
+        }
+
+        const msg = new SpeechSynthesisUtterance(processedText);
+        let voices = window.speechSynthesis.getVoices();
+        
+        let premiumVoice = voices.find(v => 
+            (v.name.includes('Xiaoxiao') || v.name.includes('Online') || v.name.includes('Google 普通话')) && 
+            v.lang.includes('zh')
+        );
+
+        if (premiumVoice) {
+            msg.voice = premiumVoice;
+        } else {
+            msg.lang = 'zh-CN';
+        }
+
+        msg.rate = adjustedRate;
+        msg.pitch = 1.0; 
         window.speechSynthesis.speak(msg);
     }
+
+    window.speechSynthesis.getVoices();
 </script>
+
 </body>
 </html>
