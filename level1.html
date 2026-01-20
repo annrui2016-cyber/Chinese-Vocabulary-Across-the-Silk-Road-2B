@@ -99,10 +99,21 @@
 
     function speak(text, rate) {
         window.speechSynthesis.cancel();
-        const msg = new SpeechSynthesisUtterance(text);
+        
+        // 技巧：单字处理逻辑
+        let processedText = text;
+        let adjustedRate = rate;
+        let adjustedPitch = 1.0;
+
+        if (text.length === 1) {
+            processedText = text + "。"; // 增加微小停顿，让单字更饱满
+            adjustedRate = rate * 0.8;   // 语速再降低20%
+            adjustedPitch = 0.95;       // 音调微降，显得深沉不急促
+        }
+
+        const msg = new SpeechSynthesisUtterance(processedText);
         let voices = window.speechSynthesis.getVoices();
         
-        // 优先尝试寻找高保真在线嗓音 (如微软 Xiaoxiao)
         let premiumVoice = voices.find(v => 
             (v.name.includes('Xiaoxiao') || v.name.includes('Online') || v.name.includes('Google 普通话')) && 
             v.lang.includes('zh')
@@ -114,10 +125,12 @@
             msg.lang = 'zh-CN';
         }
 
-        msg.rate = rate;
+        msg.rate = adjustedRate;
+        msg.pitch = adjustedPitch;
         window.speechSynthesis.speak(msg);
     }
-    // 初始化语音包
+
+    // 初始化加载
     window.speechSynthesis.getVoices();
 </script>
 
